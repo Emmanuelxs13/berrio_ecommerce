@@ -2,30 +2,40 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingCart, Heart, Star, TrendingUp, Zap } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
+import { ShoppingCart, Star, TrendingUp, Zap, Check } from 'lucide-react';
+import { Product } from '@/types';
 import { useCartStore } from '@/store/cart';
+import { FavoriteButton } from './FavoriteButton';
 import { useState } from 'react';
 
 interface ProductCardProps {
-  product: any;
+  product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const addItem = useCartStore((state) => state.addItem);
+  const { addItem, isInCart } = useCartStore();
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  const inCart = isInCart(product.id);
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
+    if (inCart || product.stock === 0) return;
+
     setIsAddingToCart(true);
+    
     addItem({
-      id: `cart-${product.id}`,
+      id: product.id,
       productId: product.id,
-      product,
+      name: product.name,
+      price: product.price,
+      discount: product.discount,
       quantity: 1,
+      image: product.images[0],
+      stock: product.stock,
+      brand: typeof product.brand === 'string' ? product.brand : product.brand.name,
     });
 
     // Simulate async operation
@@ -33,23 +43,7 @@ export function ProductCard({ product }: ProductCardProps) {
     setIsAddingToCart(false);
   };
 
-  const handleWishlist = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsWishlisted(!isWishlisted);
-  };
-
-  const imageUrl =
-    product.images?.[0]?.url ||
-    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500';
-
-  const discount =
-    product.compareAtPrice && product.compareAtPrice > product.price
-      ? Math.round(
-          ((product.compareAtPrice - product.price) / product.compareAtPrice) *
-            100
-        )
-      : 0;
+  const imageUrl = product.images?.[0] || '/placeholder-product.png';
 
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
@@ -68,12 +62,12 @@ export function ProductCard({ product }: ProductCardProps) {
 
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {discount > 0 && (
+            {product.discount && product.discount > 0 && (
               <div className="flex items-center gap-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                <TrendingUp className="h-3 w-3" />-{discount}%
+                <TrendingUp className="h-3 w-3" />-{product.discount}%
               </div>
             )}
-            {product.isFeatured && (
+            {product.featured && (
               <div className="flex items-center gap-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
                 <Zap className="h-3 w-3" />
                 Destacado
@@ -81,7 +75,7 @@ export function ProductCard({ product }: ProductCardProps) {
             )}
             {product.stock > 0 && product.stock < 10 && (
               <div className="bg-orange-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
-                Solo {product.stock} left
+                Solo {product.stock} disponibles
               </div>
             )}
             {product.stock === 0 && (
@@ -89,21 +83,18 @@ export function ProductCard({ product }: ProductCardProps) {
                 Agotado
               </div>
             )}
+            {inCart && (
+              <div className="flex items-center gap-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                <Check className="h-3 w-3" />
+                En Carrito
+              </div>
+            )}
           </div>
 
-          {/* Wishlist Button */}
-          <button
-            onClick={handleWishlist}
-            className={`absolute top-3 right-3 p-2.5 rounded-full shadow-lg transition-all duration-300 ${
-              isWishlisted
-                ? 'bg-red-500 text-white scale-110'
-                : 'bg-white/90 backdrop-blur-sm text-gray-600 hover:bg-white hover:scale-110'
-            } opacity-0 group-hover:opacity-100`}
-          >
-            <Heart
-              className={`h-4 w-4 ${isWishlisted ? 'fill-current' : ''}`}
-            />
-          </button>
+          {/* Favorite Button */}
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <FavoriteButton productId={product.id} size="md" />
+          </div>
 
           {/* Quick view overlay */}
           <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -118,7 +109,7 @@ export function ProductCard({ product }: ProductCardProps) {
           {/* Brand */}
           {product.brand && (
             <p className="text-xs font-bold text-blue-600 uppercase tracking-wider">
-              {product.brand.name}
+              {typeof product.brand === 'string' ? product.brand : product.brand.name}
             </p>
           )}
 
@@ -128,60 +119,58 @@ export function ProductCard({ product }: ProductCardProps) {
           </h3>
 
           {/* Rating */}
-          {product.rating > 0 && (
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-4 w-4 ${
-                      i < Math.floor(product.rating)
-                        ? 'text-yellow-400 fill-yellow-400'
-                        : 'text-gray-300'
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-sm font-semibold text-gray-700">
-                {product.rating}
-              </span>
-              {product.reviewCount > 0 && (
-                <span className="text-xs text-gray-500">
-                  ({product.reviewCount})
-                </span>
-              )}
+          {/* Mock rating - can be removed or made dynamic */}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`h-4 w-4 ${
+                    i < 4
+                      ? 'text-yellow-400 fill-yellow-400'
+                      : 'text-gray-300'
+                  }`}
+                />
+              ))}
             </div>
-          )}
+            <span className="text-sm font-semibold text-gray-700">4.0</span>
+          </div>
 
           {/* Price */}
           <div className="space-y-1">
-            <div className="flex items-baseline gap-2">
+            {product.discount && product.discount > 0 ? (
+              <>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-bold text-gray-900">
+                    ${(product.price * (1 - product.discount / 100)).toFixed(2)}
+                  </span>
+                  <span className="text-sm text-gray-400 line-through font-medium">
+                    ${product.price.toFixed(2)}
+                  </span>
+                </div>
+                <p className="text-xs text-green-600 font-semibold">
+                  ¡Ahorra ${(product.price * (product.discount / 100)).toFixed(2)}!
+                </p>
+              </>
+            ) : (
               <span className="text-3xl font-bold text-gray-900">
-                {formatPrice(product.price)}
+                ${product.price.toFixed(2)}
               </span>
-              {discount > 0 && (
-                <span className="text-sm text-gray-400 line-through font-medium">
-                  {formatPrice(product.compareAtPrice)}
-                </span>
-              )}
-            </div>
-            {discount > 0 && (
-              <p className="text-xs text-green-600 font-semibold">
-                ¡Ahorra {formatPrice(product.compareAtPrice - product.price)}!
-              </p>
             )}
           </div>
 
           {/* Add to Cart Button */}
           <button
             onClick={handleAddToCart}
-            disabled={product.stock === 0 || isAddingToCart}
+            disabled={product.stock === 0 || inCart || isAddingToCart}
             className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-semibold rounded-xl transition-all duration-300 ${
               product.stock === 0
                 ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                : inCart
+                ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white cursor-not-allowed'
                 : isAddingToCart
-                  ? 'bg-green-500 text-white scale-95'
-                  : 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:from-blue-700 hover:to-cyan-600 hover:shadow-lg hover:scale-105'
+                ? 'bg-green-500 text-white scale-95'
+                : 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:from-blue-700 hover:to-cyan-600 hover:shadow-lg hover:scale-105'
             }`}
           >
             <ShoppingCart
@@ -190,9 +179,11 @@ export function ProductCard({ product }: ProductCardProps) {
             <span>
               {product.stock === 0
                 ? 'Agotado'
+                : inCart
+                ? 'En el Carrito'
                 : isAddingToCart
-                  ? '¡Agregado!'
-                  : 'Agregar al Carrito'}
+                ? '¡Agregado!'
+                : 'Agregar al Carrito'}
             </span>
           </button>
         </div>

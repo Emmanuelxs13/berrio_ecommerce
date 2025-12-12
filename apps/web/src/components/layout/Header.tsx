@@ -4,7 +4,6 @@ import Link from 'next/link';
 import {
   ShoppingCart,
   User,
-  Search,
   Menu,
   X,
   Heart,
@@ -15,11 +14,13 @@ import {
 import { useState } from 'react';
 import { useCartStore } from '@/store/cart';
 import { useAuthStore } from '@/store/auth';
+import { useFavoritesStore } from '@/store/favorites';
+import { SearchBar } from '@/components/search/SearchBar';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const itemCount = useCartStore((state) => state.itemCount);
+  const { summary } = useCartStore();
+  const favoritesCount = useFavoritesStore((state) => state.count);
   const { isAuthenticated, user, logout } = useAuthStore();
 
   return (
@@ -73,35 +74,23 @@ export function Header() {
 
           {/* Search Bar - Desktop */}
           <div className="hidden md:flex flex-1 max-w-xl">
-            <div className="relative w-full group">
-              <input
-                type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar iPhone, MacBook, Samsung..."
-                className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-5 py-3 pl-12 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all"
-              />
-              <Search className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-3 p-1 hover:bg-gray-200 rounded-full transition-colors"
-                >
-                  <X className="h-4 w-4 text-gray-500" />
-                </button>
-              )}
-            </div>
+            <SearchBar />
           </div>
 
           {/* Actions */}
           <div className="flex items-center space-x-2">
             {/* Wishlist - Desktop only */}
             <Link
-              href="/wishlist"
+              href="/favorites"
               className="hidden lg:flex relative rounded-xl p-2.5 hover:bg-gray-100 transition-colors group"
               title="Lista de deseos"
             >
               <Heart className="h-6 w-6 text-gray-700 group-hover:text-red-500 transition-colors" />
+              {favoritesCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-xs font-bold text-white shadow-lg">
+                  {favoritesCount > 9 ? '9+' : favoritesCount}
+                </span>
+              )}
             </Link>
 
             {/* Cart */}
@@ -111,10 +100,10 @@ export function Header() {
               title="Carrito"
             >
               <ShoppingCart className="h-6 w-6 text-gray-700 group-hover:text-blue-600 transition-colors" />
-              {itemCount > 0 && (
+              {summary.itemCount > 0 && (
                 <>
                   <span className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-xs font-bold text-white shadow-lg animate-scale-in">
-                    {itemCount > 9 ? '9+' : itemCount}
+                    {summary.itemCount > 9 ? '9+' : summary.itemCount}
                   </span>
                   <span className="absolute -right-1 -top-1 h-6 w-6 rounded-full bg-blue-400 animate-ping opacity-75" />
                 </>
@@ -155,7 +144,7 @@ export function Header() {
                       Mis Órdenes
                     </DropdownLink>
                     <DropdownLink
-                      href="/wishlist"
+                      href="/favorites"
                       icon={<Heart className="h-4 w-4" />}
                     >
                       Lista de Deseos
@@ -205,16 +194,7 @@ export function Header() {
 
         {/* Mobile Search */}
         <div className="md:hidden pb-4">
-          <div className="relative">
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar productos..."
-              className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 pl-11 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100"
-            />
-            <Search className="absolute left-3.5 top-3.5 h-5 w-5 text-gray-400" />
-          </div>
+          <SearchBar />
         </div>
 
         {/* Mobile Menu */}
@@ -247,7 +227,7 @@ export function Header() {
                 🔥 Ofertas
               </MobileNavLink>
               <MobileNavLink
-                href="/wishlist"
+                href="/favorites"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 ❤️ Lista de Deseos
