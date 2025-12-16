@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingCart, Star, TrendingUp, Zap, Check } from 'lucide-react';
+import { ShoppingCart, Star } from 'lucide-react';
 import { Product } from '@/types';
 import { useCartStore } from '@/store/cart';
 import { FavoriteButton } from './FavoriteButton';
 import { useState } from 'react';
+import { formatPrice } from '@/lib/utils';
 
 interface ProductCardProps {
   readonly product: Product;
@@ -45,70 +46,49 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const imageUrl = product.images?.[0] || '/placeholder-product.png';
 
+  // Calcular precio final con descuento
+  const finalPrice =
+    product.discount && product.discount > 0
+      ? product.price * (1 - product.discount / 100)
+      : product.price;
+
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
-      <div className="relative h-full rounded-2xl border border-dark-800 bg-gradient-to-b from-dark-900/90 to-dark-900/50 backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-accent-500/10 hover:-translate-y-2 hover:border-dark-700">
+      <div className="relative h-full rounded-lg border border-dark-800 bg-dark-900/50 overflow-hidden transition-all hover:border-dark-700 hover:shadow-xl hover:shadow-accent-500/5">
         {/* Image Container */}
-        <div className="relative aspect-square bg-gradient-to-br from-dark-900 to-dark-800 overflow-hidden">
+        <div className="relative aspect-square bg-dark-800/50 overflow-hidden">
           <Image
             src={imageUrl}
             alt={product.name}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
-
-          {/* Overlay gradient on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-dark-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
             {product.discount && product.discount > 0 && (
-              <div className="flex items-center gap-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                <TrendingUp className="h-3 w-3" />-{product.discount}%
-              </div>
-            )}
-            {product.featured && (
-              <div className="flex items-center gap-1 bg-gradient-to-r from-accent-500 to-purple-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                <Zap className="h-3 w-3" />
-                Destacado
-              </div>
-            )}
-            {product.stock > 0 && product.stock < 10 && (
-              <div className="bg-orange-500/90 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
-                Solo {product.stock} disponibles
+              <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                -{product.discount}%
               </div>
             )}
             {product.stock === 0 && (
-              <div className="bg-dark-800/90 backdrop-blur-sm border border-dark-700 text-dark-300 text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
+              <div className="bg-dark-800/90 backdrop-blur-sm border border-dark-700 text-dark-300 text-xs font-medium px-2 py-1 rounded">
                 Agotado
-              </div>
-            )}
-            {inCart && (
-              <div className="flex items-center gap-1 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                <Check className="h-3 w-3" />
-                En Carrito
               </div>
             )}
           </div>
 
           {/* Favorite Button */}
-          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
             <FavoriteButton productId={product.id} size="md" />
-          </div>
-
-          {/* Quick view overlay */}
-          <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-dark-950/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <p className="text-white text-sm font-medium text-center">
-              Click para ver detalles
-            </p>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-5 space-y-3">
+        <div className="p-4 space-y-3">
           {/* Brand */}
           {product.brand && (
-            <p className="text-xs font-bold text-accent-400 uppercase tracking-wider">
+            <p className="text-xs font-medium text-accent-400 uppercase tracking-wide">
               {typeof product.brand === 'string'
                 ? product.brand
                 : product.brand.name}
@@ -116,23 +96,25 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
 
           {/* Title */}
-          <h3 className="font-bold text-dark-50 text-base line-clamp-2 min-h-[3rem] group-hover:text-accent-400 transition-colors">
+          <h3 className="font-semibold text-dark-50 text-sm line-clamp-2 min-h-[2.5rem]">
             {product.name}
           </h3>
 
           {/* Rating */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-0.5">
-              {Array.from({ length: 5 }, (_, i) => (
+          <div className="flex items-center gap-1.5">
+            <div className="flex gap-0.5">
+              {[1, 2, 3, 4, 5].map((star) => (
                 <Star
-                  key={`star-${product.id}-${i}`}
-                  className={`h-4 w-4 ${
-                    i < 4 ? 'text-yellow-400 fill-yellow-400' : 'text-dark-700'
+                  key={star}
+                  className={`h-3.5 w-3.5 ${
+                    star <= 4
+                      ? 'text-amber-400 fill-amber-400'
+                      : 'text-dark-700'
                   }`}
                 />
               ))}
             </div>
-            <span className="text-sm font-semibold text-dark-300">4.0</span>
+            <span className="text-xs text-dark-400">4.0</span>
           </div>
 
           {/* Price */}
@@ -140,21 +122,20 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.discount && product.discount > 0 ? (
               <>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-bold text-gradient-primary">
-                    ${(product.price * (1 - product.discount / 100)).toFixed(2)}
+                  <span className="text-xl font-bold text-dark-50">
+                    {formatPrice(finalPrice)}
                   </span>
-                  <span className="text-sm text-dark-500 line-through font-medium">
-                    ${product.price.toFixed(2)}
+                  <span className="text-sm text-dark-500 line-through">
+                    {formatPrice(product.price)}
                   </span>
                 </div>
-                <p className="text-xs text-emerald-400 font-semibold">
-                  ¡Ahorra $
-                  {(product.price * (product.discount / 100)).toFixed(2)}!
+                <p className="text-xs text-emerald-400 font-medium">
+                  Ahorra {formatPrice(product.price - finalPrice)}
                 </p>
               </>
             ) : (
-              <span className="text-3xl font-bold text-gradient-primary">
-                ${product.price.toFixed(2)}
+              <span className="text-xl font-bold text-dark-50">
+                {formatPrice(product.price)}
               </span>
             )}
           </div>
@@ -163,27 +144,25 @@ export function ProductCard({ product }: ProductCardProps) {
           <button
             onClick={handleAddToCart}
             disabled={product.stock === 0 || inCart || isAddingToCart}
-            className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-semibold rounded-xl transition-all duration-300 ${
+            className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 font-medium text-sm rounded-lg transition-all ${
               product.stock === 0
                 ? 'bg-dark-800 text-dark-500 cursor-not-allowed border border-dark-700'
                 : inCart
-                  ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white cursor-not-allowed'
+                  ? 'bg-emerald-500 text-white cursor-not-allowed'
                   : isAddingToCart
-                    ? 'bg-emerald-500 text-white scale-95'
-                    : 'bg-gradient-to-r from-accent-600 to-purple-600 text-white hover:from-accent-700 hover:to-purple-700 hover:shadow-lg hover:shadow-accent-500/50 hover:scale-105'
+                    ? 'bg-accent-600 text-white scale-95'
+                    : 'bg-accent-600 hover:bg-accent-700 text-white'
             }`}
           >
-            <ShoppingCart
-              className={`h-5 w-5 ${isAddingToCart ? 'animate-bounce' : ''}`}
-            />
+            <ShoppingCart className="h-4 w-4" />
             <span>
               {product.stock === 0
                 ? 'Agotado'
                 : inCart
-                  ? 'En el Carrito'
+                  ? 'En Carrito'
                   : isAddingToCart
-                    ? '¡Agregado!'
-                    : 'Agregar al Carrito'}
+                    ? 'Agregado'
+                    : 'Agregar'}
             </span>
           </button>
         </div>

@@ -1,160 +1,164 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Zap, Shield, TrendingUp } from 'lucide-react';
+import {
+  ArrowRight,
+  Sparkles,
+  Zap,
+  Shield,
+  TrendingUp,
+  Star,
+} from 'lucide-react';
 
 export function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      {/* Fondo con gradiente y mesh */}
-      <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950" />
+    <section className="relative bg-dark-950 overflow-hidden">
+      {/* Fondo minimalista con gradiente sutil */}
+      <div className="absolute inset-0 bg-gradient-to-b from-dark-900/50 to-dark-950" />
 
-      {/* Efectos de luz animados */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-accent-600/20 rounded-full blur-3xl animate-float" />
+      {/* Patrón de puntos sutil */}
+      <div className="absolute inset-0 opacity-[0.02]">
         <div
-          className="absolute bottom-1/4 -right-48 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: '2s' }}
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, #fff 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-500/10 rounded-full blur-3xl" />
       </div>
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_80%)]" />
-
-      <div className="relative container-custom z-10">
+      <div className="relative container-custom py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Content */}
-          <div className="space-y-8 animate-fade-in-up">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-accent-500/10 to-purple-500/10 border border-accent-500/20 backdrop-blur-sm">
-              <Sparkles className="h-4 w-4 text-accent-400" />
-              <span className="text-sm font-medium text-dark-200">
-                Tecnología de última generación
+          <div className="space-y-8">
+            {/* Badge minimalista */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-600/10 border border-accent-600/20">
+              <Star className="h-4 w-4 text-accent-400 fill-accent-400" />
+              <span className="text-sm font-medium text-accent-400">
+                Productos Premium 2025
               </span>
             </div>
 
-            {/* Heading */}
+            {/* Heading - Limpio y directo */}
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
-                <span className="text-dark-50">El futuro de la </span>
-                <br />
-                <span className="text-gradient animate-gradient-x">
-                  Tecnología
-                </span>
-                <br />
-                <span className="text-dark-50">a tu alcance</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-50 leading-tight">
+                Tecnología de última generación
               </h1>
-
-              <p className="text-lg md:text-xl text-dark-400 max-w-2xl leading-relaxed">
-                Descubre smartphones, laptops y accesorios premium de las marcas
-                más reconocidas.
-                <span className="text-dark-300 font-semibold">
-                  {' '}
-                  Calidad garantizada
-                </span>{' '}
-                y los mejores precios del mercado.
+              <p className="text-lg md:text-xl text-dark-400 leading-relaxed max-w-xl">
+                Descubre los mejores productos tecnológicos con garantía y envío
+                gratis en compras superiores a{' '}
+                <span className="text-dark-300 font-semibold">$ 100.000</span>
               </p>
             </div>
 
-            {/* CTA Buttons */}
+            {/* CTAs - Minimalistas */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/products"
-                className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-accent-600 to-purple-600 hover:from-accent-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-accent-500/50 transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-600 hover:bg-accent-700 text-white font-medium rounded-lg transition-all"
               >
-                Explorar Productos
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                Ver Productos
+                <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
                 href="/offers"
-                className="inline-flex items-center justify-center px-8 py-4 bg-dark-800/50 backdrop-blur-sm border-2 border-dark-700 hover:border-accent-500/50 text-dark-100 hover:text-white font-semibold rounded-xl transition-all duration-300 hover:bg-dark-800"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-dark-700 hover:border-dark-600 text-dark-300 hover:text-dark-50 font-medium rounded-lg transition-all"
               >
                 Ver Ofertas
               </Link>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-8">
+            {/* Trust Indicators - Minimalistas */}
+            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-dark-800/50">
               <div className="space-y-1">
-                <div className="text-3xl md:text-4xl font-bold text-gradient-primary">
-                  500+
+                <div className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-accent-400" />
+                  <div className="text-xl font-bold text-dark-50">100%</div>
                 </div>
-                <div className="text-sm text-dark-400">Productos</div>
+                <div className="text-xs text-dark-500">Garantía Original</div>
               </div>
               <div className="space-y-1">
-                <div className="text-3xl md:text-4xl font-bold text-gradient-primary">
-                  50K+
+                <div className="flex items-center gap-2">
+                  <Zap className="h-5 w-5 text-accent-400" />
+                  <div className="text-xl font-bold text-dark-50">24h</div>
                 </div>
-                <div className="text-sm text-dark-400">Clientes Felices</div>
+                <div className="text-xs text-dark-500">Envío Express</div>
               </div>
               <div className="space-y-1">
-                <div className="text-3xl md:text-4xl font-bold text-gradient-primary">
-                  4.9★
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-accent-400" />
+                  <div className="text-xl font-bold text-dark-50">5000+</div>
                 </div>
-                <div className="text-sm text-dark-400">Calificación</div>
+                <div className="text-xs text-dark-500">Clientes Felices</div>
               </div>
             </div>
           </div>
 
-          {/* Features Grid */}
-          <div
-            className="grid gap-4 animate-fade-in"
-            style={{ animationDelay: '0.2s' }}
-          >
-            <FeatureCard
-              icon={<Zap className="h-6 w-6" />}
-              title="Envío Express"
-              description="Recibe tus productos en 24-48 horas"
-              gradient="from-accent-500 to-accent-700"
-            />
-            <FeatureCard
-              icon={<Shield className="h-6 w-6" />}
-              title="Compra 100% Segura"
-              description="Garantía y protección en todas tus compras"
-              gradient="from-emerald-500 to-emerald-700"
-            />
-            <FeatureCard
-              icon={<TrendingUp className="h-6 w-6" />}
-              title="Mejores Precios"
-              description="Ofertas exclusivas y descuentos especiales"
-              gradient="from-purple-500 to-purple-700"
-            />
+          {/* Product Showcase - Minimalista */}
+          <div className="relative">
+            {/* Card principal del producto destacado */}
+            <div className="relative bg-dark-900/50 backdrop-blur-sm border border-dark-800/50 rounded-2xl p-8 shadow-2xl">
+              {/* Badge de oferta */}
+              <div className="absolute top-6 right-6 px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
+                -20% OFF
+              </div>
+
+              {/* Imagen del producto (placeholder) */}
+              <div className="aspect-square mb-6 bg-dark-800/50 rounded-xl flex items-center justify-center">
+                <Sparkles className="h-24 w-24 text-dark-600" />
+              </div>
+
+              {/* Info del producto */}
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-xl font-bold text-dark-50 mb-1">
+                    iPhone 15 Pro Max
+                  </h3>
+                  <p className="text-sm text-dark-400">
+                    256GB - Titanio Natural
+                  </p>
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-4 w-4 text-amber-400 fill-amber-400"
+                      />
+                    ))}
+                  </div>
+                  <span className="text-sm text-dark-400">(128 reseñas)</span>
+                </div>
+
+                {/* Precio */}
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-bold text-dark-50">
+                    $ 4.399.000
+                  </span>
+                  <span className="text-lg text-dark-500 line-through">
+                    $ 5.499.000
+                  </span>
+                </div>
+
+                {/* CTA */}
+                <Link
+                  href="/products/iphone-15-pro-max"
+                  className="block w-full py-3 bg-accent-600 hover:bg-accent-700 text-white text-center font-medium rounded-lg transition-all"
+                >
+                  Ver Detalles
+                </Link>
+              </div>
+            </div>
+
+            {/* Elemento decorativo - Minimalista */}
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-600/10 rounded-full blur-3xl" />
+            <div className="absolute -top-6 -left-6 w-32 h-32 bg-purple-600/10 rounded-full blur-3xl" />
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-interface FeatureCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  gradient: string;
-}
-
-function FeatureCard({ icon, title, description, gradient }: FeatureCardProps) {
-  return (
-    <div className="group relative overflow-hidden rounded-2xl border border-dark-800 bg-gradient-to-b from-dark-900/90 to-dark-900/50 backdrop-blur-xl p-6 transition-all duration-300 hover:border-dark-700 hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent-500/10">
-      {/* Glow effect on hover */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-      />
-
-      <div className="relative flex items-start gap-4">
-        <div
-          className={`flex-shrink-0 p-3 rounded-xl bg-gradient-to-br ${gradient} text-white shadow-lg`}
-        >
-          {icon}
-        </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-lg text-dark-50 mb-1 group-hover:text-gradient-primary transition-colors">
-            {title}
-          </h3>
-          <p className="text-dark-400 text-sm leading-relaxed">{description}</p>
-        </div>
-      </div>
-    </div>
   );
 }
