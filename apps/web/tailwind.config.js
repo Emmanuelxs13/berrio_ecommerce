@@ -8,51 +8,54 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Paleta oscura premium - sin neón, colores sobrios y elegantes
+        // Paleta de elegancia suprema - Colores oscuros y sofisticados
+        elegant: {
+          navy: '#1A1A40', // Azul oscuro elegante - Principal
+          wine: '#4C0027', // Vino profundo - Acentos
+          forest: '#1E5128', // Verde bosque - Éxito/Positivo
+          deep: '#082032', // Azul profundo - Secundario
+          black: '#000000', // Negro puro - Base
+        },
+        // Variaciones de los colores principales para diferentes tonos
         dark: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+          50: '#f5f5f7',
+          100: '#e8e8ec',
+          200: '#d1d1d9',
+          300: '#b0b0c0',
+          400: '#8a8a9f',
+          500: '#6a6a7f',
+          600: '#4a4a5f',
+          700: '#2a2a3f',
+          800: '#1A1A40', // Navy principal
+          900: '#0d0d20',
+          950: '#000000', // Negro puro
         },
         accent: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8', // Cyan profesional
-          500: '#0ea5e9',
-          600: '#0284c7', // Azul tecnológico sobrio
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          50: '#fef2f6',
+          100: '#fde6ed',
+          200: '#fcd0dd',
+          300: '#faa8c0',
+          400: '#f7749b',
+          500: '#ee4876',
+          600: '#dc2a5e',
+          700: '#be1e4a',
+          800: '#9e1c42',
+          900: '#4C0027', // Wine principal
         },
-        purple: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7', // Morado elegante
-          600: '#9333ea',
-          700: '#7e22ce', // Morado profundo
-          800: '#6b21a8',
-          900: '#581c87',
+        success: {
+          50: '#f0fdf5',
+          100: '#dcfce8',
+          200: '#bbf7d1',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#1E5128', // Forest principal
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
         },
-        // Paleta de soporte sin neón
-        emerald: {
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-        },
-        amber: {
+        // Colores de soporte elegantes
+        gold: {
           400: '#fbbf24',
           500: '#f59e0b',
           600: '#d97706',

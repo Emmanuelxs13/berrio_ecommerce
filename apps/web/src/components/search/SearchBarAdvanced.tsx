@@ -31,6 +31,8 @@ interface SearchBarAdvancedProps {
  * - Filtros rápidos
  */
 export function SearchBarAdvanced({ className = '' }: SearchBarAdvancedProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
   const {
     searchQuery,
     isSearching,
@@ -60,6 +62,11 @@ export function SearchBarAdvanced({ className = '' }: SearchBarAdvancedProps) {
   const searchRef = useRef<HTMLDivElement>(null);
   const popularBrands = getPopularBrands(6);
   const mainCategories = getMainCategories().slice(0, 6);
+
+  // Asegurar que el componente solo se renderice en el cliente
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Actualizar búsqueda cuando se recibe transcript de voz
   useEffect(() => {
@@ -100,6 +107,23 @@ export function SearchBarAdvanced({ className = '' }: SearchBarAdvancedProps) {
       handleSearchSubmit(e);
     }
   };
+
+  // No renderizar nada hasta que esté montado en el cliente
+  if (!isMounted) {
+    return (
+      <div className={`relative w-full ${className}`}>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            className="w-full h-11 pl-11 pr-4 rounded-lg bg-elegant-navy/50 border border-elegant-wine/20 text-dark-50 placeholder:text-dark-400 focus:outline-none focus:ring-2 focus:ring-accent-900/50 focus:border-accent-900/50 transition-all"
+            disabled
+          />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-dark-400" />
+        </div>
+      </div>
+    );
+  }
 
   const handleHistoryClick = (item: {
     query: string;

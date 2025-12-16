@@ -12,150 +12,192 @@ import {
 
 export function Hero() {
   return (
-    <section className="relative bg-dark-950 overflow-hidden">
-      {/* Fondo minimalista con gradiente sutil */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-900/50 to-dark-950" />
+    <section className="relative overflow-hidden min-h-[85vh] flex items-center">
+      {/* Fondo elegante con gradiente oscuro animado */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-elegant-deep to-elegant-navy" />
 
-      {/* Patrón de puntos sutil */}
-      <div className="absolute inset-0 opacity-[0.02]">
+      {/* Efectos de brillo dinámicos */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-900/20 rounded-full blur-3xl animate-pulse" />
+        <div
+          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-elegant-wine/20 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: '1s' }}
+        />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-success-600/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: '2s' }}
+        />
+      </div>
+
+      {/* Grid pattern tech */}
+      <div className="absolute inset-0 opacity-[0.05]">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage:
-              'radial-gradient(circle, #fff 1px, transparent 1px)',
-            backgroundSize: '32px 32px',
+            backgroundImage: `
+              linear-gradient(to right, #4C0027 1px, transparent 1px),
+              linear-gradient(to bottom, #4C0027 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
           }}
         />
       </div>
 
-      <div className="relative container-custom py-16 lg:py-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Content */}
-          <div className="space-y-8">
-            {/* Badge minimalista */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-600/10 border border-accent-600/20">
-              <Star className="h-4 w-4 text-accent-400 fill-accent-400" />
-              <span className="text-sm font-medium text-accent-400">
-                Productos Premium 2025
+      <div className="relative container-custom py-16 lg:py-24 w-full">
+        <div className="max-w-5xl mx-auto">
+          {/* Content centralizado */}
+          <div className="text-center space-y-10">
+            {/* Badge elegante con animación */}
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-accent-900/40 to-elegant-wine/40 border border-accent-900/60 backdrop-blur-xl shadow-2xl shadow-accent-900/30 animate-fade-in">
+              <Star className="h-5 w-5 text-gold-400 fill-gold-400 animate-pulse" />
+              <span className="text-base font-bold text-accent-300 tracking-wide">
+                TECNOLOGÍA PREMIUM 2025
               </span>
+              <Star
+                className="h-5 w-5 text-gold-400 fill-gold-400 animate-pulse"
+                style={{ animationDelay: '0.5s' }}
+              />
             </div>
 
-            {/* Heading - Limpio y directo */}
-            <div className="space-y-4">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-50 leading-tight">
-                Tecnología de última generación
+            {/* Heading - Impactante */}
+            <div className="space-y-6">
+              <h1 className="text-5xl md:text-6xl lg:text-8xl font-black leading-tight">
+                <span className="block bg-gradient-to-r from-white via-accent-300 to-white bg-clip-text text-transparent animate-gradient-x">
+                  El Futuro
+                </span>
+                <span
+                  className="block mt-2 bg-gradient-to-r from-accent-400 via-elegant-wine to-accent-400 bg-clip-text text-transparent animate-gradient-x"
+                  style={{ animationDelay: '0.5s' }}
+                >
+                  Es Ahora
+                </span>
               </h1>
-              <p className="text-lg md:text-xl text-dark-400 leading-relaxed max-w-xl">
-                Descubre los mejores productos tecnológicos con garantía y envío
-                gratis en compras superiores a{' '}
-                <span className="text-dark-300 font-semibold">$ 100.000</span>
+              <p className="text-xl md:text-2xl text-dark-200 leading-relaxed max-w-3xl mx-auto font-light">
+                Descubre la nueva generación de{' '}
+                <span className="text-accent-400 font-semibold">
+                  smartphones
+                </span>
+                ,
+                <span className="text-success-400 font-semibold"> laptops</span>{' '}
+                y
+                <span className="text-gold-400 font-semibold"> accesorios</span>{' '}
+                que transformarán tu mundo digital
               </p>
             </div>
 
-            {/* CTAs - Minimalistas */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* CTAs destacados */}
+            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center pt-4">
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-600 hover:bg-accent-700 text-white font-medium rounded-lg transition-all"
+                className="group relative px-10 py-5 bg-gradient-to-r from-accent-900 to-elegant-wine rounded-xl font-bold text-lg text-white overflow-hidden transition-all hover:scale-105 hover:shadow-2xl hover:shadow-accent-900/60 shadow-xl shadow-accent-900/40"
               >
-                Ver Productos
-                <ArrowRight className="h-5 w-5" />
+                <span className="relative z-10 flex items-center gap-3">
+                  Explorar Productos
+                  <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-accent-800 to-elegant-wine/90 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
+
               <Link
                 href="/offers"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-dark-700 hover:border-dark-600 text-dark-300 hover:text-dark-50 font-medium rounded-lg transition-all"
+                className="group px-10 py-5 border-2 border-accent-900/60 hover:border-accent-900 bg-accent-900/10 hover:bg-accent-900/20 backdrop-blur-xl text-accent-300 hover:text-accent-200 font-bold text-lg rounded-xl transition-all hover:scale-105 shadow-lg"
               >
-                Ver Ofertas
+                <span className="flex items-center gap-3">
+                  Ver Ofertas
+                  <Sparkles className="h-6 w-6 group-hover:rotate-12 transition-transform" />
+                </span>
               </Link>
             </div>
 
-            {/* Trust Indicators - Minimalistas */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-dark-800/50">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-accent-400" />
-                  <div className="text-xl font-bold text-dark-50">100%</div>
-                </div>
-                <div className="text-xs text-dark-500">Garantía Original</div>
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <Zap className="h-5 w-5 text-accent-400" />
-                  <div className="text-xl font-bold text-dark-50">24h</div>
-                </div>
-                <div className="text-xs text-dark-500">Envío Express</div>
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-accent-400" />
-                  <div className="text-xl font-bold text-dark-50">5000+</div>
-                </div>
-                <div className="text-xs text-dark-500">Clientes Felices</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Product Showcase - Minimalista */}
-          <div className="relative">
-            {/* Card principal del producto destacado */}
-            <div className="relative bg-dark-900/50 backdrop-blur-sm border border-dark-800/50 rounded-2xl p-8 shadow-2xl">
-              {/* Badge de oferta */}
-              <div className="absolute top-6 right-6 px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
-                -20% OFF
-              </div>
-
-              {/* Imagen del producto (placeholder) */}
-              <div className="aspect-square mb-6 bg-dark-800/50 rounded-xl flex items-center justify-center">
-                <Sparkles className="h-24 w-24 text-dark-600" />
-              </div>
-
-              {/* Info del producto */}
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-xl font-bold text-dark-50 mb-1">
-                    iPhone 15 Pro Max
-                  </h3>
-                  <p className="text-sm text-dark-400">
-                    256GB - Titanio Natural
+            {/* Stats impactantes */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-16 max-w-4xl mx-auto">
+              <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-success-600/20 to-success-600/5 border border-success-600/30 backdrop-blur-sm hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-success-600/20">
+                <div className="absolute inset-0 bg-gradient-to-br from-success-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative space-y-3">
+                  <div className="flex justify-center">
+                    <div className="p-4 rounded-xl bg-success-600/30 group-hover:bg-success-600/40 transition-colors">
+                      <Shield className="h-8 w-8 text-success-400" />
+                    </div>
+                  </div>
+                  <div className="text-4xl font-black text-white">100%</div>
+                  <div className="text-sm text-success-300 font-semibold uppercase tracking-wider">
+                    Garantía Oficial
+                  </div>
+                  <p className="text-xs text-dark-400">
+                    Respaldo total del fabricante
                   </p>
                 </div>
+              </div>
 
-                {/* Rating */}
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-4 w-4 text-amber-400 fill-amber-400"
-                      />
-                    ))}
+              <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-accent-900/20 to-accent-900/5 border border-accent-900/30 backdrop-blur-sm hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-accent-900/20">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative space-y-3">
+                  <div className="flex justify-center">
+                    <div className="p-4 rounded-xl bg-accent-900/30 group-hover:bg-accent-900/40 transition-colors">
+                      <Zap className="h-8 w-8 text-accent-400" />
+                    </div>
                   </div>
-                  <span className="text-sm text-dark-400">(128 reseñas)</span>
+                  <div className="text-4xl font-black text-white">24h</div>
+                  <div className="text-sm text-accent-300 font-semibold uppercase tracking-wider">
+                    Envío Express
+                  </div>
+                  <p className="text-xs text-dark-400">
+                    Recibe tu pedido al día siguiente
+                  </p>
                 </div>
+              </div>
 
-                {/* Precio */}
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-bold text-dark-50">
-                    $ 4.399.000
-                  </span>
-                  <span className="text-lg text-dark-500 line-through">
-                    $ 5.499.000
-                  </span>
+              <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-gold-600/20 to-gold-600/5 border border-gold-600/30 backdrop-blur-sm hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-gold-600/20">
+                <div className="absolute inset-0 bg-gradient-to-br from-gold-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative space-y-3">
+                  <div className="flex justify-center">
+                    <div className="p-4 rounded-xl bg-gold-600/30 group-hover:bg-gold-600/40 transition-colors">
+                      <TrendingUp className="h-8 w-8 text-gold-400" />
+                    </div>
+                  </div>
+                  <div className="text-4xl font-black text-white">+5K</div>
+                  <div className="text-sm text-gold-300 font-semibold uppercase tracking-wider">
+                    Clientes Satisfechos
+                  </div>
+                  <p className="text-xs text-dark-400">
+                    Confianza que nos respalda
+                  </p>
                 </div>
-
-                {/* CTA */}
-                <Link
-                  href="/products/iphone-15-pro-max"
-                  className="block w-full py-3 bg-accent-600 hover:bg-accent-700 text-white text-center font-medium rounded-lg transition-all"
-                >
-                  Ver Detalles
-                </Link>
               </div>
             </div>
 
-            {/* Elemento decorativo - Minimalista */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-600/10 rounded-full blur-3xl" />
-            <div className="absolute -top-6 -left-6 w-32 h-32 bg-purple-600/10 rounded-full blur-3xl" />
+            {/* Info adicional */}
+            <div className="pt-8 flex flex-wrap justify-center gap-8 text-sm text-dark-400">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-success-400 animate-pulse" />
+                <span>
+                  Envío gratis desde{' '}
+                  <span className="text-success-400 font-bold">$ 100.000</span>
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-2 h-2 rounded-full bg-accent-400 animate-pulse"
+                  style={{ animationDelay: '0.5s' }}
+                />
+                <span>
+                  Hasta{' '}
+                  <span className="text-accent-400 font-bold">12 cuotas</span>{' '}
+                  sin interés
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-2 h-2 rounded-full bg-gold-400 animate-pulse"
+                  style={{ animationDelay: '1s' }}
+                />
+                <span>
+                  Devolución{' '}
+                  <span className="text-gold-400 font-bold">gratuita</span> 30
+                  días
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
