@@ -31,7 +31,13 @@ export interface ProductFilters {
   maxPrice?: number;
   inStock?: boolean;
   featured?: boolean;
-  sortBy?: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc' | 'newest' | 'popular';
+  sortBy?:
+    | 'price_asc'
+    | 'price_desc'
+    | 'name_asc'
+    | 'name_desc'
+    | 'newest'
+    | 'popular';
   page?: number;
   limit?: number;
 }
@@ -120,6 +126,59 @@ export interface FavoriteItem {
   addedAt: string;
 }
 
+// ==================== ORDERS ====================
+export interface Order {
+  id: string;
+  userId: string;
+  items: OrderItem[];
+  subtotal: number;
+  shipping: number;
+  tax: number;
+  total: number;
+  status: OrderStatus;
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrderItem {
+  id: string;
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
+
+export interface ShippingAddress {
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
+
+export type OrderStatus =
+  | 'PENDING'
+  | 'PROCESSING'
+  | 'SHIPPED'
+  | 'DELIVERED'
+  | 'CANCELLED';
+
+export interface CreateOrderData {
+  items: OrderItem[];
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
+  subtotal: number;
+  shipping: number;
+  tax: number;
+  total: number;
+}
+
 // ==================== USER & AUTH ====================
 export interface User {
   id: string;
@@ -153,7 +212,7 @@ export interface AuthResponse {
 }
 
 // ==================== API RESPONSES ====================
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;

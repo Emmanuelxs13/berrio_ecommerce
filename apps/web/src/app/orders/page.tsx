@@ -114,7 +114,8 @@ export default function OrdersPage() {
               Aún no tienes pedidos
             </h2>
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              Cuando realices tu primera compra, podrás ver el estado de tus pedidos aquí
+              Cuando realices tu primera compra, podrás ver el estado de tus
+              pedidos aquí
             </p>
             <Link
               href="/products"
@@ -129,7 +130,11 @@ export default function OrdersPage() {
             <div className="bg-white rounded-xl shadow-sm p-4 flex flex-wrap items-center justify-between gap-4">
               <div>
                 <p className="text-sm text-gray-600">
-                  Mostrando <span className="font-semibold text-gray-900">{mockOrders.length}</span> pedidos
+                  Mostrando{' '}
+                  <span className="font-semibold text-gray-900">
+                    {mockOrders.length}
+                  </span>{' '}
+                  pedidos
                 </p>
               </div>
               <select className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -153,7 +158,9 @@ export default function OrdersPage() {
                     <div className="flex items-center gap-6">
                       <div>
                         <p className="text-sm text-gray-600">Orden</p>
-                        <p className="font-bold text-gray-900">#{order.orderNumber}</p>
+                        <p className="font-bold text-gray-900">
+                          #{order.orderNumber}
+                        </p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-600">Fecha</p>
@@ -257,7 +264,8 @@ export default function OrdersPage() {
               ¿Necesitas ayuda con tu pedido?
             </h3>
             <p className="text-gray-700 mb-6">
-              Nuestro equipo de soporte está disponible 24/7 para ayudarte con cualquier pregunta
+              Nuestro equipo de soporte está disponible 24/7 para ayudarte con
+              cualquier pregunta
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link

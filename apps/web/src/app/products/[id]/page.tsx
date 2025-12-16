@@ -23,6 +23,14 @@ import { Loading } from '@/components/ui/Loading';
 import { FavoriteButton } from '@/components/products/FavoriteButton';
 import { ProductCard } from '@/components/products/ProductCard';
 
+// Helper function to determine cart button text
+function getCartButtonText(stock: number, inCart: boolean): string {
+  if (stock === 0) {
+    return 'Agotado';
+  }
+  return inCart ? 'Añadir Más al Carrito' : 'Añadir al Carrito';
+}
+
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -30,12 +38,18 @@ export default function ProductDetailPage() {
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<'description' | 'specs'>('description');
+  const [activeTab, setActiveTab] = useState<'description' | 'specs'>(
+    'description'
+  );
 
   const { addItem, isInCart, getItemQuantity } = useCartStore();
 
   // Fetch product details
-  const { data: product, isLoading, error } = useQuery({
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['product', productId],
     queryFn: () => getProductById(productId),
   });
@@ -65,7 +79,8 @@ export default function ProductDetailPage() {
       quantity,
       image: product.images[0],
       stock: product.stock,
-      brand: typeof product.brand === 'string' ? product.brand : product.brand.name,
+      brand:
+        typeof product.brand === 'string' ? product.brand : product.brand.name,
     });
   };
 
@@ -78,7 +93,7 @@ export default function ProductDetailPage() {
   };
 
   const calculateSavings = () => {
-    if (!product || !product.discount) return 0;
+    if (!product?.discount) return 0;
     return product.price * (product.discount / 100);
   };
 
@@ -121,7 +136,10 @@ export default function ProductDetailPage() {
     <div className="bg-gray-50">
       <div className="container-custom py-6 md:py-8">
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
+        <nav
+          className="flex items-center gap-2 text-sm mb-6"
+          aria-label="Breadcrumb"
+        >
           <Link
             href="/"
             className="text-gray-600 hover:text-blue-600 transition-colors"
@@ -156,7 +174,7 @@ export default function ProductDetailPage() {
               />
 
               {/* Discount Badge */}
-              {product.discount && product.discount > 0 && (
+              {Boolean(product.discount && product.discount > 0) && (
                 <div className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-black shadow-lg">
                   -{product.discount}% OFF
                 </div>
@@ -188,7 +206,8 @@ export default function ProductDetailPage() {
               <div className="grid grid-cols-4 gap-3">
                 {product.images.map((image, index) => (
                   <button
-                    key={index}
+                    key={`thumbnail-${product.id}-${index}`}
+                    type="button"
                     onClick={() => setSelectedImage(index)}
                     className={`relative aspect-square bg-white rounded-lg overflow-hidden border-2 transition-all ${
                       selectedImage === index
@@ -216,7 +235,9 @@ export default function ProductDetailPage() {
                 href={`/products?brand=${typeof product.brand === 'string' ? product.brand : product.brand.id}`}
                 className="inline-block text-sm font-bold text-blue-600 hover:text-blue-700 uppercase tracking-wide mb-2"
               >
-                {typeof product.brand === 'string' ? product.brand : product.brand.name}
+                {typeof product.brand === 'string'
+                  ? product.brand
+                  : product.brand.name}
               </Link>
             </div>
 
@@ -228,9 +249,9 @@ export default function ProductDetailPage() {
             {/* Rating */}
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
+                {Array.from({ length: 5 }, (_, i) => (
                   <Star
-                    key={i}
+                    key={`rating-star-${product.id}-${i}`}
                     className={`h-5 w-5 ${
                       i < 4
                         ? 'text-yellow-400 fill-yellow-400'
@@ -259,7 +280,8 @@ export default function ProductDetailPage() {
                     </div>
                     <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold">
                       <Check className="h-4 w-4" />
-                      Ahorras ${calculateSavings().toFixed(2)} ({product.discount}%)
+                      Ahorras ${calculateSavings().toFixed(2)} (
+                      {product.discount}%)
                     </div>
                   </>
                 ) : (
@@ -290,12 +312,16 @@ export default function ProductDetailPage() {
             {/* Quantity Selector */}
             {product.stock > 0 && (
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-3">
+                <label
+                  htmlFor="quantity-input"
+                  className="block text-sm font-bold text-gray-700 mb-3"
+                >
                   Cantidad
                 </label>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-3 bg-white rounded-xl border-2 border-gray-200 p-2">
                     <button
+                      type="button"
                       onClick={() => handleQuantityChange(quantity - 1)}
                       disabled={quantity <= 1}
                       className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -304,15 +330,19 @@ export default function ProductDetailPage() {
                     </button>
                     <input
                       type="number"
+                      id="quantity-input"
                       min="1"
                       max={product.stock}
                       value={quantity}
                       onChange={(e) =>
-                        handleQuantityChange(parseInt(e.target.value) || 1)
+                        handleQuantityChange(
+                          Number.parseInt(e.target.value, 10) || 1
+                        )
                       }
                       className="w-16 text-center text-lg font-bold border-0 focus:outline-none"
                     />
                     <button
+                      type="button"
                       onClick={() => handleQuantityChange(quantity + 1)}
                       disabled={quantity >= product.stock}
                       className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -334,15 +364,14 @@ export default function ProductDetailPage() {
             <div className="space-y-3">
               <button
                 onClick={handleAddToCart}
-                disabled={product.stock === 0 || (inCart && quantity + cartQuantity > product.stock)}
+                disabled={
+                  product.stock === 0 ||
+                  (inCart && quantity + cartQuantity > product.stock)
+                }
                 className="w-full flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-8 py-4 text-lg font-bold text-white shadow-lg hover:from-blue-700 hover:to-cyan-600 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <ShoppingCart className="h-6 w-6" />
-                {product.stock === 0
-                  ? 'Agotado'
-                  : inCart
-                  ? 'Añadir Más al Carrito'
-                  : 'Añadir al Carrito'}
+                {getCartButtonText(product.stock, inCart)}
               </button>
 
               <button
@@ -360,7 +389,9 @@ export default function ProductDetailPage() {
                   <Truck className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900 text-sm">Envío Gratis</p>
+                  <p className="font-bold text-gray-900 text-sm">
+                    Envío Gratis
+                  </p>
                   <p className="text-xs text-gray-600">En compras +$999</p>
                 </div>
               </div>
@@ -427,15 +458,42 @@ export default function ProductDetailPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <SpecRow label="Marca" value={typeof product.brand === 'string' ? product.brand : product.brand.name} />
+                  <SpecRow
+                    label="Marca"
+                    value={
+                      typeof product.brand === 'string'
+                        ? product.brand
+                        : product.brand.name
+                    }
+                  />
                   <SpecRow label="Modelo" value={product.name} />
-                  <SpecRow label="Disponibilidad" value={product.stock > 0 ? `${product.stock} unidades` : 'Agotado'} />
+                  <SpecRow
+                    label="Disponibilidad"
+                    value={
+                      product.stock > 0
+                        ? `${product.stock} unidades`
+                        : 'Agotado'
+                    }
+                  />
                 </div>
                 <div className="space-y-3">
-                  <SpecRow label="Categoría" value={typeof product.category === 'string' ? product.category : product.category.name} />
-                  <SpecRow label="Destacado" value={product.featured ? 'Sí' : 'No'} />
-                  <SpecRow label="Precio" value={`$${product.price.toFixed(2)}`} />
-                  {product.discount && product.discount > 0 && (
+                  <SpecRow
+                    label="Categoría"
+                    value={
+                      typeof product.category === 'string'
+                        ? product.category
+                        : product.category.name
+                    }
+                  />
+                  <SpecRow
+                    label="Destacado"
+                    value={product.featured ? 'Sí' : 'No'}
+                  />
+                  <SpecRow
+                    label="Precio"
+                    value={`$${product.price.toFixed(2)}`}
+                  />
+                  {Boolean(product.discount && product.discount > 0) && (
                     <SpecRow label="Descuento" value={`${product.discount}%`} />
                   )}
                 </div>
@@ -473,7 +531,12 @@ export default function ProductDetailPage() {
 }
 
 // Helper Component
-function SpecRow({ label, value }: { label: string; value: string }) {
+interface SpecRowProps {
+  readonly label: string;
+  readonly value: string;
+}
+
+function SpecRow({ label, value }: SpecRowProps) {
   return (
     <div className="flex items-center justify-between py-3 border-b border-gray-100">
       <span className="text-gray-600 font-semibold">{label}</span>

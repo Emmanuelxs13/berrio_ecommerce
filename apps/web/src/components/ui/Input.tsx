@@ -13,17 +13,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            'flex h-11 w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2 text-sm transition-all',
-            'placeholder:text-gray-400',
-            'focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100',
+            'flex h-12 w-full rounded-xl border border-dark-700 bg-dark-900/50 backdrop-blur-sm px-4 py-3 text-sm text-dark-50 transition-all',
+            'placeholder:text-dark-500',
+            'focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500/50',
             'disabled:cursor-not-allowed disabled:opacity-50',
-            error && 'border-red-500 focus:border-red-500 focus:ring-red-100',
+            error &&
+              'border-red-500 focus:border-red-500 focus:ring-red-500/50',
             className
           )}
           ref={ref}
           {...props}
         />
-        {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-1 text-sm text-red-400">{error}</p>}
       </div>
     );
   }

@@ -45,7 +45,9 @@ export default function ProfilePage() {
     gender: '',
   });
 
-  const [originalData, setOriginalData] = useState<UserProfileData>({ ...profileData });
+  const [originalData, setOriginalData] = useState<UserProfileData>({
+    ...profileData,
+  });
 
   // Redirigir si no está autenticado
   if (!isAuthenticated) {
@@ -158,18 +160,22 @@ export default function ProfilePage() {
       {/* Stats */}
       <div className="container mx-auto px-4 -mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <Link
-              key={index}
+              key={`stat-${stat.link}`}
               href={stat.link}
               className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="flex items-center gap-4">
-                <div className={`w-14 h-14 rounded-xl ${stat.color} flex items-center justify-center`}>
+                <div
+                  className={`w-14 h-14 rounded-xl ${stat.color} flex items-center justify-center`}
+                >
                   <stat.icon className="w-7 h-7" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
+                  <p className="text-3xl font-bold text-gray-900">
+                    {stat.value}
+                  </p>
                   <p className="text-sm text-gray-600">{stat.label}</p>
                 </div>
               </div>
@@ -240,7 +246,9 @@ export default function ProfilePage() {
             {activeTab === 'profile' && (
               <div className="bg-white rounded-2xl shadow-sm p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900">Información Personal</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    Información Personal
+                  </h2>
                   {!isEditing ? (
                     <button
                       onClick={handleEdit}
@@ -271,16 +279,23 @@ export default function ProfilePage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="profile-name"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Nombre Completo
                     </label>
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                       <input
                         type="text"
+                        id="profile-name"
                         value={profileData.name}
                         onChange={(e) =>
-                          setProfileData({ ...profileData, name: e.target.value })
+                          setProfileData({
+                            ...profileData,
+                            name: e.target.value,
+                          })
                         }
                         disabled={!isEditing}
                         className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
@@ -293,16 +308,23 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="profile-email"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Email
                     </label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                       <input
                         type="email"
+                        id="profile-email"
                         value={profileData.email}
                         onChange={(e) =>
-                          setProfileData({ ...profileData, email: e.target.value })
+                          setProfileData({
+                            ...profileData,
+                            email: e.target.value,
+                          })
                         }
                         disabled={!isEditing}
                         className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
@@ -315,16 +337,23 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="profile-phone"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Teléfono
                     </label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                       <input
                         type="tel"
+                        id="profile-phone"
                         value={profileData.phone}
                         onChange={(e) =>
-                          setProfileData({ ...profileData, phone: e.target.value })
+                          setProfileData({
+                            ...profileData,
+                            phone: e.target.value,
+                          })
                         }
                         disabled={!isEditing}
                         placeholder="+57 300 123 4567"
@@ -338,14 +367,21 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="profile-birthdate"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Fecha de Nacimiento
                     </label>
                     <input
                       type="date"
+                      id="profile-birthdate"
                       value={profileData.birthDate}
                       onChange={(e) =>
-                        setProfileData({ ...profileData, birthDate: e.target.value })
+                        setProfileData({
+                          ...profileData,
+                          birthDate: e.target.value,
+                        })
                       }
                       disabled={!isEditing}
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
@@ -357,13 +393,20 @@ export default function ProfilePage() {
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="profile-gender"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Género
                     </label>
                     <select
+                      id="profile-gender"
                       value={profileData.gender}
                       onChange={(e) =>
-                        setProfileData({ ...profileData, gender: e.target.value })
+                        setProfileData({
+                          ...profileData,
+                          gender: e.target.value,
+                        })
                       }
                       disabled={!isEditing}
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
@@ -376,7 +419,9 @@ export default function ProfilePage() {
                       <option value="male">Masculino</option>
                       <option value="female">Femenino</option>
                       <option value="other">Otro</option>
-                      <option value="prefer_not_to_say">Prefiero no decir</option>
+                      <option value="prefer_not_to_say">
+                        Prefiero no decir
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -387,7 +432,9 @@ export default function ProfilePage() {
             {activeTab === 'addresses' && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">Mis Direcciones</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    Mis Direcciones
+                  </h2>
                   <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                     Agregar Dirección
                   </button>
@@ -448,13 +495,17 @@ export default function ProfilePage() {
                   </h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label
+                        htmlFor="current-password"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
                         Contraseña Actual
                       </label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                         <input
                           type="password"
+                          id="current-password"
                           placeholder="••••••••"
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
@@ -462,13 +513,17 @@ export default function ProfilePage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label
+                        htmlFor="new-password"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
                         Nueva Contraseña
                       </label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                         <input
                           type="password"
+                          id="new-password"
                           placeholder="••••••••"
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
@@ -476,20 +531,27 @@ export default function ProfilePage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label
+                        htmlFor="confirm-password"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
                         Confirmar Nueva Contraseña
                       </label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                         <input
                           type="password"
+                          id="confirm-password"
                           placeholder="••••••••"
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                     </div>
 
-                    <button className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors">
+                    <button
+                      type="button"
+                      className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors"
+                    >
                       Actualizar Contraseña
                     </button>
                   </div>
@@ -506,8 +568,18 @@ export default function ProfilePage() {
                         Agrega una capa extra de seguridad a tu cuenta
                       </p>
                     </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" className="sr-only peer" />
+                    <label
+                      htmlFor="two-factor-auth"
+                      className="relative inline-flex items-center cursor-pointer"
+                    >
+                      <span className="sr-only">
+                        Activar autenticación de dos factores
+                      </span>
+                      <input
+                        type="checkbox"
+                        id="two-factor-auth"
+                        className="sr-only peer"
+                      />
                       <div className="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
                     </label>
                   </div>
@@ -519,7 +591,8 @@ export default function ProfilePage() {
                     Eliminar Cuenta
                   </h3>
                   <p className="text-sm text-red-700 mb-4">
-                    Esta acción es permanente y no se puede deshacer. Todos tus datos serán eliminados.
+                    Esta acción es permanente y no se puede deshacer. Todos tus
+                    datos serán eliminados.
                   </p>
                   <button className="px-6 py-3 bg-red-600 text-white font-medium rounded-xl hover:bg-red-700 transition-colors">
                     Eliminar mi Cuenta
@@ -532,7 +605,9 @@ export default function ProfilePage() {
             {activeTab === 'orders' && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">Pedidos Recientes</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    Pedidos Recientes
+                  </h2>
                   <Link
                     href="/orders"
                     className="text-blue-600 hover:text-blue-700 font-medium"
@@ -550,8 +625,12 @@ export default function ProfilePage() {
                     >
                       <div className="flex items-center justify-between mb-4">
                         <div>
-                          <p className="text-sm text-gray-600">Orden #BR2024{order.toString().padStart(3, '0')}</p>
-                          <p className="font-semibold text-gray-900">12 de Diciembre, 2024</p>
+                          <p className="text-sm text-gray-600">
+                            Orden #BR2024{order.toString().padStart(3, '0')}
+                          </p>
+                          <p className="font-semibold text-gray-900">
+                            12 de Diciembre, 2024
+                          </p>
                         </div>
                         <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
                           Entregado
@@ -559,7 +638,8 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex items-center justify-between">
                         <p className="text-gray-700">
-                          3 productos · <span className="font-bold">$156.000</span>
+                          3 productos ·{' '}
+                          <span className="font-bold">$156.000</span>
                         </p>
                         <Link
                           href={`/orders/${order}`}

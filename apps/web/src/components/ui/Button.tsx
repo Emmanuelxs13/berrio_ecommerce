@@ -22,18 +22,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+      'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950 disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden';
 
     const variants = {
       primary:
-        'bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:from-blue-700 hover:to-cyan-600 shadow-lg hover:shadow-xl hover:scale-105 focus-visible:ring-blue-500',
+        'bg-gradient-to-r from-accent-600 to-purple-600 text-white hover:from-accent-700 hover:to-purple-700 shadow-lg hover:shadow-accent-500/50 focus-visible:ring-accent-500 hover:scale-105 active:scale-95',
       secondary:
-        'bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500',
+        'bg-dark-800 text-dark-50 hover:bg-dark-700 border border-dark-700 hover:border-dark-600 focus-visible:ring-dark-500',
       outline:
-        'border-2 border-gray-300 bg-white hover:bg-gray-50 focus-visible:ring-gray-500',
-      ghost: 'hover:bg-gray-100 focus-visible:ring-gray-500',
+        'border-2 border-dark-700 bg-transparent text-dark-50 hover:bg-dark-800 hover:border-accent-500 focus-visible:ring-dark-500',
+      ghost:
+        'text-dark-300 hover:text-dark-50 hover:bg-dark-800/50 focus-visible:ring-dark-500',
       destructive:
-        'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500',
+        'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500 hover:scale-105 active:scale-95',
     };
 
     const sizes = {

@@ -13,7 +13,6 @@ import {
   Lock,
   ShoppingBag,
   CheckCircle,
-  AlertCircle,
   ArrowLeft,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -40,9 +39,11 @@ interface PaymentInfo {
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, summary, clearCart } = useCartStore();
-  const { user, isAuthenticated } = useAuthStore();
+  const { user } = useAuthStore();
 
-  const [step, setStep] = useState<'shipping' | 'payment' | 'review'>('shipping');
+  const [step, setStep] = useState<'shipping' | 'payment' | 'review'>(
+    'shipping'
+  );
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
 
@@ -78,7 +79,10 @@ export default function CheckoutPage() {
     if (!shippingInfo.fullName.trim()) {
       newErrors.fullName = 'El nombre es requerido';
     }
-    if (!shippingInfo.email.trim() || !/\S+@\S+\.\S+/.test(shippingInfo.email)) {
+    if (
+      !shippingInfo.email.trim() ||
+      !/\S+@\S+\.\S+/.test(shippingInfo.email)
+    ) {
       newErrors.email = 'Email válido es requerido';
     }
     if (!shippingInfo.phone.trim()) {
@@ -162,7 +166,9 @@ export default function CheckoutPage() {
       }, 3000);
     } catch (error) {
       console.error('Error placing order:', error);
-      alert('Hubo un error al procesar tu pedido. Por favor intenta nuevamente.');
+      alert(
+        'Hubo un error al procesar tu pedido. Por favor intenta nuevamente.'
+      );
     } finally {
       setIsProcessing(false);
     }
@@ -180,7 +186,8 @@ export default function CheckoutPage() {
             ¡Pedido Realizado!
           </h1>
           <p className="text-gray-600 mb-6">
-            Tu pedido ha sido procesado exitosamente. Recibirás un email de confirmación en breve.
+            Tu pedido ha sido procesado exitosamente. Recibirás un email de
+            confirmación en breve.
           </p>
           <div className="bg-gray-50 rounded-xl p-4 mb-6">
             <p className="text-sm text-gray-600 mb-1">Número de orden</p>
@@ -231,7 +238,11 @@ export default function CheckoutPage() {
                     : 'bg-green-100 text-green-600'
                 }`}
               >
-                {step !== 'shipping' ? <CheckCircle className="w-6 h-6" /> : '1'}
+                {step !== 'shipping' ? (
+                  <CheckCircle className="w-6 h-6" />
+                ) : (
+                  '1'
+                )}
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-gray-900">Envío</p>
@@ -251,8 +262,8 @@ export default function CheckoutPage() {
                   step === 'payment'
                     ? 'bg-blue-600 text-white'
                     : step === 'review'
-                    ? 'bg-green-100 text-green-600'
-                    : 'bg-gray-200 text-gray-600'
+                      ? 'bg-green-100 text-green-600'
+                      : 'bg-gray-200 text-gray-600'
                 }`}
               >
                 {step === 'review' ? <CheckCircle className="w-6 h-6" /> : '2'}
@@ -291,7 +302,10 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2">
             {/* Shipping Form */}
             {step === 'shipping' && (
-              <form onSubmit={handleShippingSubmit} className="bg-white rounded-2xl p-6 shadow-sm">
+              <form
+                onSubmit={handleShippingSubmit}
+                className="bg-white rounded-2xl p-6 shadow-sm"
+              >
                 <div className="flex items-center gap-3 mb-6">
                   <MapPin className="w-6 h-6 text-blue-600" />
                   <h2 className="text-2xl font-bold text-gray-900">
@@ -310,7 +324,10 @@ export default function CheckoutPage() {
                         type="text"
                         value={shippingInfo.fullName}
                         onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, fullName: e.target.value })
+                          setShippingInfo({
+                            ...shippingInfo,
+                            fullName: e.target.value,
+                          })
                         }
                         className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                           errors.fullName ? 'border-red-500' : 'border-gray-300'
@@ -319,7 +336,9 @@ export default function CheckoutPage() {
                       />
                     </div>
                     {errors.fullName && (
-                      <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.fullName}
+                      </p>
                     )}
                   </div>
 
@@ -333,7 +352,10 @@ export default function CheckoutPage() {
                         type="email"
                         value={shippingInfo.email}
                         onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, email: e.target.value })
+                          setShippingInfo({
+                            ...shippingInfo,
+                            email: e.target.value,
+                          })
                         }
                         className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                           errors.email ? 'border-red-500' : 'border-gray-300'
@@ -342,7 +364,9 @@ export default function CheckoutPage() {
                       />
                     </div>
                     {errors.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.email}
+                      </p>
                     )}
                   </div>
 
@@ -356,7 +380,10 @@ export default function CheckoutPage() {
                         type="tel"
                         value={shippingInfo.phone}
                         onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, phone: e.target.value })
+                          setShippingInfo({
+                            ...shippingInfo,
+                            phone: e.target.value,
+                          })
                         }
                         className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                           errors.phone ? 'border-red-500' : 'border-gray-300'
@@ -365,7 +392,9 @@ export default function CheckoutPage() {
                       />
                     </div>
                     {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.phone}
+                      </p>
                     )}
                   </div>
 
@@ -377,7 +406,10 @@ export default function CheckoutPage() {
                       type="text"
                       value={shippingInfo.address}
                       onChange={(e) =>
-                        setShippingInfo({ ...shippingInfo, address: e.target.value })
+                        setShippingInfo({
+                          ...shippingInfo,
+                          address: e.target.value,
+                        })
                       }
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.address ? 'border-red-500' : 'border-gray-300'
@@ -385,7 +417,9 @@ export default function CheckoutPage() {
                       placeholder="Calle 123 #45-67, Apto 8B"
                     />
                     {errors.address && (
-                      <p className="mt-1 text-sm text-red-600">{errors.address}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.address}
+                      </p>
                     )}
                   </div>
 
@@ -397,7 +431,10 @@ export default function CheckoutPage() {
                       type="text"
                       value={shippingInfo.city}
                       onChange={(e) =>
-                        setShippingInfo({ ...shippingInfo, city: e.target.value })
+                        setShippingInfo({
+                          ...shippingInfo,
+                          city: e.target.value,
+                        })
                       }
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.city ? 'border-red-500' : 'border-gray-300'
@@ -417,7 +454,10 @@ export default function CheckoutPage() {
                       type="text"
                       value={shippingInfo.state}
                       onChange={(e) =>
-                        setShippingInfo({ ...shippingInfo, state: e.target.value })
+                        setShippingInfo({
+                          ...shippingInfo,
+                          state: e.target.value,
+                        })
                       }
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.state ? 'border-red-500' : 'border-gray-300'
@@ -425,7 +465,9 @@ export default function CheckoutPage() {
                       placeholder="Cundinamarca"
                     />
                     {errors.state && (
-                      <p className="mt-1 text-sm text-red-600">{errors.state}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.state}
+                      </p>
                     )}
                   </div>
 
@@ -437,7 +479,10 @@ export default function CheckoutPage() {
                       type="text"
                       value={shippingInfo.zipCode}
                       onChange={(e) =>
-                        setShippingInfo({ ...shippingInfo, zipCode: e.target.value })
+                        setShippingInfo({
+                          ...shippingInfo,
+                          zipCode: e.target.value,
+                        })
                       }
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.zipCode ? 'border-red-500' : 'border-gray-300'
@@ -445,7 +490,9 @@ export default function CheckoutPage() {
                       placeholder="110111"
                     />
                     {errors.zipCode && (
-                      <p className="mt-1 text-sm text-red-600">{errors.zipCode}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.zipCode}
+                      </p>
                     )}
                   </div>
 
@@ -457,7 +504,10 @@ export default function CheckoutPage() {
                       type="text"
                       value={shippingInfo.country}
                       onChange={(e) =>
-                        setShippingInfo({ ...shippingInfo, country: e.target.value })
+                        setShippingInfo({
+                          ...shippingInfo,
+                          country: e.target.value,
+                        })
                       }
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Colombia"
@@ -476,7 +526,10 @@ export default function CheckoutPage() {
 
             {/* Payment Form */}
             {step === 'payment' && (
-              <form onSubmit={handlePaymentSubmit} className="bg-white rounded-2xl p-6 shadow-sm">
+              <form
+                onSubmit={handlePaymentSubmit}
+                className="bg-white rounded-2xl p-6 shadow-sm"
+              >
                 <div className="flex items-center gap-3 mb-6">
                   <CreditCard className="w-6 h-6 text-blue-600" />
                   <h2 className="text-2xl font-bold text-gray-900">
@@ -499,19 +552,25 @@ export default function CheckoutPage() {
                           if (value.length <= 16 && /^\d*$/.test(value)) {
                             setPaymentInfo({
                               ...paymentInfo,
-                              cardNumber: value.replace(/(.{4})/g, '$1 ').trim(),
+                              cardNumber: value
+                                .replace(/(.{4})/g, '$1 ')
+                                .trim(),
                             });
                           }
                         }}
                         className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                          errors.cardNumber ? 'border-red-500' : 'border-gray-300'
+                          errors.cardNumber
+                            ? 'border-red-500'
+                            : 'border-gray-300'
                         }`}
                         placeholder="1234 5678 9012 3456"
                         maxLength={19}
                       />
                     </div>
                     {errors.cardNumber && (
-                      <p className="mt-1 text-sm text-red-600">{errors.cardNumber}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.cardNumber}
+                      </p>
                     )}
                   </div>
 
@@ -523,7 +582,10 @@ export default function CheckoutPage() {
                       type="text"
                       value={paymentInfo.cardName}
                       onChange={(e) =>
-                        setPaymentInfo({ ...paymentInfo, cardName: e.target.value.toUpperCase() })
+                        setPaymentInfo({
+                          ...paymentInfo,
+                          cardName: e.target.value.toUpperCase(),
+                        })
                       }
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.cardName ? 'border-red-500' : 'border-gray-300'
@@ -531,7 +593,9 @@ export default function CheckoutPage() {
                       placeholder="JUAN PEREZ"
                     />
                     {errors.cardName && (
-                      <p className="mt-1 text-sm text-red-600">{errors.cardName}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.cardName}
+                      </p>
                     )}
                   </div>
 
@@ -549,17 +613,24 @@ export default function CheckoutPage() {
                             value = value.slice(0, 2) + '/' + value.slice(2, 4);
                           }
                           if (value.length <= 5) {
-                            setPaymentInfo({ ...paymentInfo, expiryDate: value });
+                            setPaymentInfo({
+                              ...paymentInfo,
+                              expiryDate: value,
+                            });
                           }
                         }}
                         className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                          errors.expiryDate ? 'border-red-500' : 'border-gray-300'
+                          errors.expiryDate
+                            ? 'border-red-500'
+                            : 'border-gray-300'
                         }`}
                         placeholder="MM/YY"
                         maxLength={5}
                       />
                       {errors.expiryDate && (
-                        <p className="mt-1 text-sm text-red-600">{errors.expiryDate}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.expiryDate}
+                        </p>
                       )}
                     </div>
 
@@ -586,7 +657,9 @@ export default function CheckoutPage() {
                         />
                       </div>
                       {errors.cvv && (
-                        <p className="mt-1 text-sm text-red-600">{errors.cvv}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.cvv}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -633,7 +706,8 @@ export default function CheckoutPage() {
                     <p className="font-semibold">{shippingInfo.fullName}</p>
                     <p>{shippingInfo.address}</p>
                     <p>
-                      {shippingInfo.city}, {shippingInfo.state} {shippingInfo.zipCode}
+                      {shippingInfo.city}, {shippingInfo.state}{' '}
+                      {shippingInfo.zipCode}
                     </p>
                     <p>{shippingInfo.country}</p>
                     <p className="pt-2">{shippingInfo.email}</p>
@@ -659,9 +733,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="text-gray-700">
                     <p className="font-semibold mb-1">{paymentInfo.cardName}</p>
-                    <p>
-                      •••• •••• •••• {paymentInfo.cardNumber.slice(-4)}
-                    </p>
+                    <p>•••• •••• •••• {paymentInfo.cardNumber.slice(-4)}</p>
                     <p className="text-sm text-gray-500 mt-1">
                       Expira {paymentInfo.expiryDate}
                     </p>
@@ -697,7 +769,8 @@ export default function CheckoutPage() {
                         </div>
                         <div className="text-right">
                           <p className="font-semibold text-gray-900">
-                            ${(
+                            $
+                            {(
                               (item.discount
                                 ? item.price * (1 - item.discount / 100)
                                 : item.price) * item.quantity

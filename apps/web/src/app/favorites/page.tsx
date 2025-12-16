@@ -39,7 +39,8 @@ export default function FavoritesPage() {
       quantity: 1,
       image: product.images[0],
       stock: product.stock,
-      brand: typeof product.brand === 'string' ? product.brand : product.brand.name,
+      brand:
+        typeof product.brand === 'string' ? product.brand : product.brand.name,
     });
   };
 
@@ -137,8 +138,8 @@ export default function FavoritesPage() {
               Mi Lista de Deseos
             </h1>
             <p className="text-gray-600">
-              {favorites.length} {favorites.length === 1 ? 'producto' : 'productos'}{' '}
-              guardados
+              {favorites.length}{' '}
+              {favorites.length === 1 ? 'producto' : 'productos'} guardados
             </p>
           </div>
 
@@ -223,7 +224,9 @@ export default function FavoritesPage() {
             <div className="p-4">
               {/* Brand */}
               <p className="text-xs font-semibold text-blue-600 mb-1 uppercase tracking-wide">
-                {typeof product.brand === 'string' ? product.brand : product.brand.name}
+                {typeof product.brand === 'string'
+                  ? product.brand
+                  : product.brand.name}
               </p>
 
               {/* Name */}
@@ -239,10 +242,9 @@ export default function FavoritesPage() {
                   <div className="flex items-baseline gap-2">
                     <span className="text-2xl font-black text-gray-900">
                       $
-                      {(
-                        product.price *
-                        (1 - product.discount / 100)
-                      ).toFixed(2)}
+                      {(product.price * (1 - product.discount / 100)).toFixed(
+                        2
+                      )}
                     </span>
                     <span className="text-sm text-gray-500 line-through">
                       ${product.price.toFixed(2)}
@@ -287,9 +289,7 @@ export default function FavoritesPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div>
             <div className="text-3xl mb-3">🎯</div>
-            <h3 className="font-bold text-gray-900 mb-2">
-              Compra Inteligente
-            </h3>
+            <h3 className="font-bold text-gray-900 mb-2">Compra Inteligente</h3>
             <p className="text-sm text-gray-600">
               Compara precios y características de tus productos favoritos
             </p>

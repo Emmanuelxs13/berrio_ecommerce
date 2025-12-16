@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
   }
 
   html {
@@ -15,65 +15,131 @@
   }
 
   body {
-    @apply bg-white text-gray-900 font-sans;
+    @apply bg-dark-950 text-dark-50 font-sans;
+    background-image:
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.03) 0px, transparent 50%),
+      radial-gradient(
+        at 100% 0%,
+        rgba(139, 92, 246, 0.03) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 100% 100%,
+        rgba(6, 182, 212, 0.03) 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.03) 0px, transparent 50%);
   }
 
   * {
-    @apply border-gray-200;
+    @apply border-dark-800;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-950;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-dark-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-dark-600;
   }
 }
 
 @layer components {
   .container-custom {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950 disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden;
   }
 
   .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md;
+    @apply bg-gradient-to-r from-accent-600 to-purple-600 text-white hover:from-accent-700 hover:to-purple-700 shadow-lg hover:shadow-accent-500/50 hover:scale-105 active:scale-95;
   }
 
   .btn-secondary {
-    @apply bg-gray-200 text-gray-900 hover:bg-gray-300;
+    @apply bg-dark-800 text-dark-50 hover:bg-dark-700 border border-dark-700 hover:border-dark-600;
   }
 
   .btn-outline {
-    @apply border border-gray-300 bg-white hover:bg-gray-50;
+    @apply border-2 border-dark-700 bg-transparent text-dark-50 hover:bg-dark-800 hover:border-accent-500;
+  }
+
+  .btn-ghost {
+    @apply text-dark-300 hover:text-dark-50 hover:bg-dark-800/50;
   }
 
   .card {
-    @apply rounded-xl border bg-white text-gray-900 shadow-sm transition-all duration-300;
+    @apply rounded-2xl border border-dark-800 bg-gradient-to-b from-dark-900/90 to-dark-900/50 backdrop-blur-xl text-dark-50 shadow-xl transition-all duration-300;
   }
 
   .card-hover {
-    @apply hover:shadow-lg hover:-translate-y-1;
+    @apply hover:shadow-2xl hover:shadow-accent-500/10 hover:-translate-y-1 hover:border-dark-700;
   }
 
   .input {
-    @apply flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200;
+    @apply flex h-12 w-full rounded-xl border border-dark-700 bg-dark-900/50 backdrop-blur-sm px-4 py-3 text-sm text-dark-50 placeholder:text-dark-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:border-accent-500 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200;
   }
 
   .badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors;
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold transition-all duration-200;
   }
 
   .badge-primary {
-    @apply bg-blue-100 text-blue-800;
+    @apply bg-accent-500/10 text-accent-400 border border-accent-500/20;
   }
 
   .badge-success {
-    @apply bg-green-100 text-green-800;
+    @apply bg-emerald-500/10 text-emerald-400 border border-emerald-500/20;
   }
 
   .badge-warning {
-    @apply bg-yellow-100 text-yellow-800;
+    @apply bg-orange-500/10 text-orange-400 border border-orange-500/20;
   }
 
   .badge-error {
-    @apply bg-red-100 text-red-800;
+    @apply bg-red-500/10 text-red-400 border border-red-500/20;
+  }
+
+  .glass {
+    @apply bg-dark-900/40 backdrop-blur-xl border border-dark-800/50;
+  }
+
+  .glass-strong {
+    @apply bg-dark-900/80 backdrop-blur-2xl border border-dark-700;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-400 via-purple-400 to-accent-400;
+  }
+
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-400 to-accent-600;
+  }
+
+  .section {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-sm {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .link {
+    @apply text-dark-300 hover:text-accent-400 transition-colors duration-200;
+  }
+
+  .link-primary {
+    @apply text-accent-400 hover:text-accent-300 transition-colors duration-200;
   }
 }
 
@@ -83,36 +149,35 @@
   }
 
   .animate-fade-in {
-    animation: fadeIn 0.5s ease-in;
+    animation: fade-in 0.6s ease-out;
   }
 
   .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out;
+    animation: slide-up 0.7s ease-out;
   }
 
   .animate-slide-in-right {
-    animation: slideInRight 0.4s ease-out;
+    animation: slideInRight 0.5s ease-out;
   }
 
   .animate-scale-in {
-    animation: scaleIn 0.3s ease-out;
+    animation: scale-in 0.4s ease-out;
   }
 
-  .gradient-primary {
-    @apply bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500;
+  .blur-subtle {
+    backdrop-filter: blur(8px);
   }
 
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500;
+  .blur-medium {
+    backdrop-filter: blur(16px);
   }
 
-  .shadow-glow {
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+  .blur-strong {
+    backdrop-filter: blur(24px);
   }
 }
 
-/* Animations */
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
@@ -121,37 +186,66 @@
   }
 }
 
-@keyframes fadeInUp {
+@keyframes slide-up {
   from {
-    opacity: 0;
     transform: translateY(20px);
+    opacity: 0;
   }
   to {
-    opacity: 1;
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
 @keyframes slideInRight {
   from {
+    transform: translateX(30px);
     opacity: 0;
-    transform: translateX(-20px);
   }
   to {
-    opacity: 1;
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
-@keyframes scaleIn {
+@keyframes scale-in {
   from {
+    transform: scale(0.9);
     opacity: 0;
-    transform: scale(0.95);
   }
   to {
-    opacity: 1;
     transform: scale(1);
+    opacity: 1;
   }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  33% {
+    transform: translateY(-30px) translateX(30px);
+  }
+  66% {
+    transform: translateY(30px) translateX(-30px);
+  }
+}
+
+.skeleton {
+  @apply relative overflow-hidden bg-dark-800/50 rounded;
+}
+
+.skeleton::after {
+  content: '';
+  @apply absolute inset-0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
@@ -163,53 +257,15 @@
   }
 }
 
-/* Skeleton loader */
-.skeleton {
-  @apply relative overflow-hidden bg-gray-200 rounded;
-}
-
-.skeleton::after {
-  content: '';
-  @apply absolute inset-0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
-  animation: shimmer 2s infinite;
-}
-
-/* Focus visible */
 *:focus-visible {
-  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+  @apply outline-none ring-2 ring-accent-500 ring-offset-2 ring-offset-dark-950;
 }
 
-/* Smooth transitions */
 a,
 button {
   @apply transition-all duration-200 ease-in-out;
 }
 
-/* Images */
 img {
   @apply max-w-full h-auto;
-}
-
-/* Custom scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-gray-100 rounded-lg;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-lg;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
 }

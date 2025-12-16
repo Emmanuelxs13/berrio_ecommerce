@@ -11,6 +11,9 @@ import type {
   AuthResponse,
   CartItem,
   ApiResponse,
+  User,
+  Order,
+  CreateOrderData,
 } from '@/types';
 
 const API_URL =
@@ -40,7 +43,9 @@ if (typeof window !== 'undefined') {
       if (error.response?.status === 401) {
         localStorage.removeItem('auth-token');
         localStorage.removeItem('auth-user');
-        window.location.href = '/login';
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login';
+        }
       }
       return Promise.reject(error);
     }
@@ -74,7 +79,9 @@ export const searchProducts = async (query: string): Promise<Product[]> => {
   return data.data!;
 };
 
-export const getRelatedProducts = async (productId: string): Promise<Product[]> => {
+export const getRelatedProducts = async (
+  productId: string
+): Promise<Product[]> => {
   const { data } = await api.get<ApiResponse<Product[]>>(
     `/products/${productId}/related`
   );
@@ -132,7 +139,9 @@ export const getOfferById = async (id: string): Promise<Offer> => {
 };
 
 // ==================== AUTH ====================
-export const register = async (userData: RegisterData): Promise<AuthResponse> => {
+export const register = async (
+  userData: RegisterData
+): Promise<AuthResponse> => {
   const { data } = await api.post<ApiResponse<AuthResponse>>(
     '/auth/register',
     userData
@@ -154,41 +163,46 @@ export const logout = async (): Promise<void> => {
   await api.post('/auth/logout');
 };
 
-export const getProfile = async (): Promise<any> => {
-  const { data } = await api.get<ApiResponse>('/auth/profile');
-  return data.data;
+export const getProfile = async (): Promise<User> => {
+  const { data } = await api.get<ApiResponse<User>>('/auth/profile');
+  return data.data!;
 };
 
-export const updateProfile = async (profileData: any): Promise<any> => {
-  const { data } = await api.put<ApiResponse>('/auth/profile', profileData);
-  return data.data;
+export const updateProfile = async (
+  profileData: Partial<User>
+): Promise<User> => {
+  const { data } = await api.put<ApiResponse<User>>(
+    '/auth/profile',
+    profileData
+  );
+  return data.data!;
 };
 
 // ==================== CART (Client-side for now) ====================
-// These will work with Zustand store instead of API initially
+// These functions will work with Zustand store instead of API initially
 export const getCart = async (): Promise<CartItem[]> => {
-  // TODO: Implement when backend is ready
+  // Will be implemented when backend is ready
   return [];
 };
 
 export const addToCart = async (
-  productId: string,
-  quantity: number = 1
+  _productId: string,
+  _quantity: number = 1
 ): Promise<void> => {
-  // TODO: Implement when backend is ready
+  // Will be implemented when backend is ready
   return;
 };
 
 export const updateCartItem = async (
-  itemId: string,
-  quantity: number
+  _itemId: string,
+  _quantity: number
 ): Promise<void> => {
-  // TODO: Implement when backend is ready
+  // Will be implemented when backend is ready
   return;
 };
 
-export const removeFromCart = async (itemId: string): Promise<void> => {
-  // TODO: Implement when backend is ready
+export const removeFromCart = async (_itemId: string): Promise<void> => {
+  // Will be implemented when backend is ready
   return;
 };
 
@@ -207,17 +221,19 @@ export const removeFromFavorites = async (productId: string): Promise<void> => {
 };
 
 // ==================== ORDERS ====================
-export const getOrders = async (): Promise<any[]> => {
-  const { data } = await api.get<ApiResponse<any[]>>('/orders');
+export const getOrders = async (): Promise<Order[]> => {
+  const { data } = await api.get<ApiResponse<Order[]>>('/orders');
   return data.data!;
 };
 
-export const getOrderById = async (id: string): Promise<any> => {
-  const { data } = await api.get<ApiResponse>(`/orders/${id}`);
-  return data.data;
+export const getOrderById = async (id: string): Promise<Order> => {
+  const { data } = await api.get<ApiResponse<Order>>(`/orders/${id}`);
+  return data.data!;
 };
 
-export const createOrder = async (orderData: any): Promise<any> => {
-  const { data } = await api.post<ApiResponse>('/orders', orderData);
-  return data.data;
+export const createOrder = async (
+  orderData: CreateOrderData
+): Promise<Order> => {
+  const { data } = await api.post<ApiResponse<Order>>('/orders', orderData);
+  return data.data!;
 };

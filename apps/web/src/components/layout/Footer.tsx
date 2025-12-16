@@ -5,48 +5,46 @@ import { Input } from '../ui/Input';
 
 export function Footer() {
   return (
-    <footer className="border-t bg-gradient-to-b from-gray-50 to-gray-100">
+    <footer className="border-t border-dark-800 bg-gradient-to-b from-dark-950 to-dark-900">
       <div className="container-custom py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="p-2 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg">
+              <div className="p-2 bg-gradient-to-br from-accent-600 to-purple-600 rounded-xl shadow-lg">
                 <Zap className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
-                Berrio
-              </span>
+              <span className="text-xl font-bold text-gradient">Berrio</span>
             </Link>
-            <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+            <p className="text-sm text-dark-400 mb-4 leading-relaxed">
               Tu tienda de electrónicos de confianza. Los mejores productos a
               los mejores precios.
             </p>
             <div className="flex gap-3">
               <a
                 href="#"
-                className="p-2 rounded-lg bg-white border border-gray-200 text-gray-600 hover:text-primary-600 hover:border-primary-300 hover:shadow-md transition-all"
+                className="p-2 rounded-xl bg-dark-800/50 border border-dark-700 text-dark-400 hover:text-accent-400 hover:border-accent-500/50 hover:bg-dark-800 transition-all"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="p-2 rounded-lg bg-white border border-gray-200 text-gray-600 hover:text-primary-600 hover:border-primary-300 hover:shadow-md transition-all"
+                className="p-2 rounded-xl bg-dark-800/50 border border-dark-700 text-dark-400 hover:text-accent-400 hover:border-accent-500/50 hover:bg-dark-800 transition-all"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="p-2 rounded-lg bg-white border border-gray-200 text-gray-600 hover:text-primary-600 hover:border-primary-300 hover:shadow-md transition-all"
+                className="p-2 rounded-xl bg-dark-800/50 border border-dark-700 text-dark-400 hover:text-accent-400 hover:border-accent-500/50 hover:bg-dark-800 transition-all"
                 aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="p-2 rounded-lg bg-white border border-gray-200 text-gray-600 hover:text-primary-600 hover:border-primary-300 hover:shadow-md transition-all"
+                className="p-2 rounded-xl bg-dark-800/50 border border-dark-700 text-dark-400 hover:text-accent-400 hover:border-accent-500/50 hover:bg-dark-800 transition-all"
                 aria-label="Youtube"
               >
                 <Youtube className="h-5 w-5" />
@@ -56,14 +54,12 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4 text-gray-900">
-              Enlaces Rápidos
-            </h4>
+            <h4 className="font-semibold mb-4 text-dark-50">Enlaces Rápidos</h4>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link
                   href="/about"
-                  className="text-gray-600 hover:text-primary-600 transition-colors inline-flex items-center group"
+                  className="text-dark-400 hover:text-accent-400 transition-colors inline-flex items-center group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">
                     Sobre Nosotros
@@ -73,7 +69,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-gray-600 hover:text-primary-600 transition-colors inline-flex items-center group"
+                  className="text-dark-400 hover:text-accent-400 transition-colors inline-flex items-center group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">
                     Contacto
@@ -83,7 +79,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/faq"
-                  className="text-gray-600 hover:text-primary-600 transition-colors inline-flex items-center group"
+                  className="text-dark-400 hover:text-accent-400 transition-colors inline-flex items-center group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">
                     Preguntas Frecuentes
@@ -93,7 +89,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/shipping"
-                  className="text-gray-600 hover:text-primary-600 transition-colors inline-flex items-center group"
+                  className="text-dark-400 hover:text-accent-400 transition-colors inline-flex items-center group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">
                     Envíos
@@ -105,14 +101,14 @@ export function Footer() {
 
           {/* Customer Service */}
           <div>
-            <h4 className="font-semibold mb-4 text-gray-900">
+            <h4 className="font-semibold mb-4 text-dark-50">
               Atención al Cliente
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link
                   href="/orders"
-                  className="text-gray-600 hover:text-primary-600 transition-colors inline-flex items-center group"
+                  className="text-dark-400 hover:text-accent-400 transition-colors inline-flex items-center group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">
                     Mis Pedidos
@@ -122,7 +118,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/returns"
-                  className="text-gray-600 hover:text-primary-600 transition-colors inline-flex items-center group"
+                  className="text-dark-400 hover:text-accent-400 transition-colors inline-flex items-center group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">
                     Devoluciones
@@ -132,7 +128,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/warranty"
-                  className="text-gray-600 hover:text-primary-600 transition-colors inline-flex items-center group"
+                  className="text-dark-400 hover:text-accent-400 transition-colors inline-flex items-center group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">
                     Garantías
@@ -142,7 +138,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="text-gray-600 hover:text-primary-600 transition-colors inline-flex items-center group"
+                  className="text-dark-400 hover:text-accent-400 transition-colors inline-flex items-center group"
                 >
                   <span className="group-hover:translate-x-1 transition-transform">
                     Privacidad
@@ -154,8 +150,8 @@ export function Footer() {
 
           {/* Newsletter Mini */}
           <div>
-            <h4 className="font-semibold mb-4 text-gray-900">Newsletter</h4>
-            <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+            <h4 className="font-semibold mb-4 text-dark-50">Newsletter</h4>
+            <p className="text-sm text-dark-400 mb-4 leading-relaxed">
               Suscríbete para recibir ofertas exclusivas
             </p>
             <div className="flex gap-2">
@@ -176,27 +172,27 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-300">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-600">
+        <div className="mt-12 pt-8 border-t border-dark-800">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-dark-400">
             <p>
               &copy; 2024 Berrio Electronics. Todos los derechos reservados.
             </p>
             <div className="flex gap-6">
               <Link
                 href="/terms"
-                className="hover:text-primary-600 transition-colors"
+                className="hover:text-accent-400 transition-colors"
               >
                 Términos
               </Link>
               <Link
                 href="/privacy"
-                className="hover:text-primary-600 transition-colors"
+                className="hover:text-accent-400 transition-colors"
               >
                 Privacidad
               </Link>
               <Link
                 href="/cookies"
-                className="hover:text-primary-600 transition-colors"
+                className="hover:text-accent-400 transition-colors"
               >
                 Cookies
               </Link>

@@ -95,7 +95,7 @@ export function Pagination({
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="px-3 py-2 text-gray-400"
+                className="px-3 py-2 text-dark-400"
               >
                 ...
               </span>
@@ -112,8 +112,8 @@ export function Pagination({
               disabled={isActive}
               className={`min-w-[40px] h-10 px-3 rounded-lg font-medium transition-all ${
                 isActive
-                  ? 'bg-primary-600 text-white shadow-md cursor-default'
-                  : 'bg-white border border-gray-200 text-gray-700 hover:border-primary-500 hover:text-primary-600'
+                  ? 'bg-gradient-to-r from-accent-600 to-purple-600 text-white shadow-md shadow-accent-500/20 cursor-default'
+                  : 'bg-dark-900/50 border border-dark-700 text-dark-300 hover:border-accent-500 hover:text-accent-400'
               }`}
               aria-label={`Página ${pageNum}`}
               aria-current={isActive ? 'page' : undefined}

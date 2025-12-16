@@ -11,15 +11,19 @@ import Link from 'next/link';
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
-  const [sortBy, setSortBy] = useState<'relevance' | 'price-asc' | 'price-desc' | 'newest'>('relevance');
-  const [priceRange, setPriceRange] = useState<'all' | '0-50' | '50-100' | '100-200' | '200+'>('all');
+  const [sortBy, setSortBy] = useState<
+    'relevance' | 'price-asc' | 'price-desc' | 'newest'
+  >('relevance');
+  const [priceRange, setPriceRange] = useState<
+    'all' | '0-50' | '50-100' | '100-200' | '200+'
+  >('all');
 
   const { data: searchResults, isLoading } = useQuery({
     queryKey: ['search', query, sortBy, priceRange],
     queryFn: async () => {
       if (!query) return [];
       const results = await searchProducts(query);
-      
+
       // Apply sorting
       let sorted = [...results];
       switch (sortBy) {
@@ -30,7 +34,10 @@ export default function SearchPage() {
           sorted.sort((a, b) => b.price - a.price);
           break;
         case 'newest':
-          sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          sorted.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
           break;
         default:
           // relevance - keep original order
@@ -39,7 +46,7 @@ export default function SearchPage() {
 
       // Apply price filter
       if (priceRange !== 'all') {
-        sorted = sorted.filter(product => {
+        sorted = sorted.filter((product) => {
           const price = product.price;
           switch (priceRange) {
             case '0-50':
@@ -70,20 +77,20 @@ export default function SearchPage() {
 
   if (!query) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center px-4">
+      <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 bg-dark-950">
         <div className="text-center max-w-md">
-          <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-            <Search className="w-10 h-10 text-gray-400" />
+          <div className="mx-auto w-20 h-20 bg-dark-900 border border-dark-800 rounded-full flex items-center justify-center mb-6">
+            <Search className="w-10 h-10 text-dark-400" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl font-bold text-dark-50 mb-3">
             Busca productos
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-dark-300 mb-6">
             Usa la barra de búsqueda para encontrar los productos que necesitas
           </p>
           <Link
             href="/"
-            className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-accent-600 to-purple-600 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-accent-500/20 transition-all"
           >
             Volver al inicio
           </Link>
@@ -94,15 +101,18 @@ export default function SearchPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 bg-dark-950 min-h-screen">
         <div className="mb-8">
-          <div className="h-8 bg-gray-200 rounded w-64 mb-4 animate-pulse" />
-          <div className="h-6 bg-gray-200 rounded w-48 animate-pulse" />
+          <div className="h-8 bg-dark-800 rounded w-64 mb-4 animate-pulse" />
+          <div className="h-6 bg-dark-800 rounded w-48 animate-pulse" />
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={`skeleton-${i}`} className="bg-gray-100 rounded-2xl h-96 animate-pulse" />
+            <div
+              key={`skeleton-${i}`}
+              className="bg-dark-900/50 rounded-2xl h-96 animate-pulse border border-dark-800"
+            />
           ))}
         </div>
       </div>
@@ -112,20 +122,26 @@ export default function SearchPage() {
   const resultsCount = searchResults?.length || 0;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-dark-950 min-h-screen">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-dark-50 mb-2">
           Resultados de búsqueda
         </h1>
-        <p className="text-gray-600">
+        <p className="text-dark-300">
           {resultsCount > 0 ? (
             <>
-              Mostrando <span className="font-semibold">{resultsCount}</span> {resultsCount === 1 ? 'resultado' : 'resultados'} para &quot;<span className="font-semibold text-gray-900">{query}</span>&quot;
+              Mostrando{' '}
+              <span className="font-semibold text-dark-50">{resultsCount}</span>{' '}
+              {resultsCount === 1 ? 'resultado' : 'resultados'} para &quot;
+              <span className="font-semibold text-accent-400">{query}</span>
+              &quot;
             </>
           ) : (
             <>
-              No se encontraron resultados para &quot;<span className="font-semibold text-gray-900">{query}</span>&quot;
+              No se encontraron resultados para &quot;
+              <span className="font-semibold text-accent-400">{query}</span>
+              &quot;
             </>
           )}
         </p>
@@ -134,17 +150,20 @@ export default function SearchPage() {
       {resultsCount > 0 && (
         <>
           {/* Filters */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-8">
+          <div className="bg-dark-900/50 backdrop-blur-sm border border-dark-800 rounded-2xl p-6 mb-8">
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-2">
-                <label htmlFor="sort" className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="sort"
+                  className="text-sm font-medium text-dark-200"
+                >
                   Ordenar:
                 </label>
                 <select
                   id="sort"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-                  className="px-4 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="px-4 py-2 border border-dark-700 bg-dark-900/50 text-dark-50 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/50 focus:border-accent-500"
                 >
                   <option value="relevance">Más relevantes</option>
                   <option value="price-asc">Precio: Menor a Mayor</option>
@@ -154,14 +173,19 @@ export default function SearchPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <label htmlFor="price" className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="price"
+                  className="text-sm font-medium text-dark-200"
+                >
                   Precio:
                 </label>
                 <select
                   id="price"
                   value={priceRange}
-                  onChange={(e) => setPriceRange(e.target.value as typeof priceRange)}
-                  className="px-4 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  onChange={(e) =>
+                    setPriceRange(e.target.value as typeof priceRange)
+                  }
+                  className="px-4 py-2 border border-dark-700 bg-dark-900/50 text-dark-50 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/50 focus:border-accent-500"
                 >
                   <option value="all">Todos</option>
                   <option value="0-50">Hasta $50.000</option>
@@ -174,7 +198,7 @@ export default function SearchPage() {
               {hasActiveFilters && (
                 <button
                   onClick={clearFilters}
-                  className="ml-auto flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors"
+                  className="ml-auto flex items-center gap-2 px-4 py-2 text-sm text-dark-300 hover:text-dark-50 hover:bg-dark-800 rounded-xl transition-colors"
                 >
                   <X className="w-4 h-4" />
                   Limpiar filtros
@@ -195,25 +219,25 @@ export default function SearchPage() {
       {/* Empty State */}
       {resultsCount === 0 && (
         <div className="flex flex-col items-center justify-center py-16 px-4">
-          <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-            <Search className="w-12 h-12 text-gray-400" />
+          <div className="mx-auto w-24 h-24 bg-dark-900 border border-dark-800 rounded-full flex items-center justify-center mb-6">
+            <Search className="w-12 h-12 text-dark-400" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">
+          <h2 className="text-2xl font-bold text-dark-50 mb-3">
             No encontramos resultados
           </h2>
-          <p className="text-gray-600 text-center max-w-md mb-8">
+          <p className="text-dark-300 text-center max-w-md mb-8">
             Intenta con otros términos de búsqueda o explora nuestras categorías
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
               href="/products"
-              className="px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors"
+              className="px-6 py-3 bg-gradient-to-r from-accent-600 to-purple-600 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-accent-500/20 transition-all"
             >
               Ver todos los productos
             </Link>
             <Link
               href="/offers"
-              className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
+              className="px-6 py-3 bg-dark-900/50 border-2 border-dark-700 text-dark-200 font-medium rounded-xl hover:bg-dark-800 hover:border-accent-500 transition-colors"
             >
               Ver ofertas
             </Link>

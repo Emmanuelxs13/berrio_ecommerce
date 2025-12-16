@@ -9,7 +9,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  
+
   login: (credentials: LoginCredentials) => Promise<void>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
         try {
           const response = await api.login(credentials);
-          
+
           if (typeof globalThis.window !== 'undefined') {
             localStorage.setItem('auth-token', response.token);
           }
@@ -56,9 +56,7 @@ export const useAuthStore = create<AuthState>()(
           });
         } catch (error: unknown) {
           const message =
-            error instanceof Error
-              ? error.message
-              : 'Error al iniciar sesión';
+            error instanceof Error ? error.message : 'Error al iniciar sesión';
           set({
             isLoading: false,
             error: message,
@@ -71,7 +69,7 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
         try {
           const response = await api.register(data);
-          
+
           if (typeof globalThis.window !== 'undefined') {
             localStorage.setItem('auth-token', response.token);
           }
@@ -85,9 +83,7 @@ export const useAuthStore = create<AuthState>()(
           });
         } catch (error: unknown) {
           const message =
-            error instanceof Error
-              ? error.message
-              : 'Error al registrarse';
+            error instanceof Error ? error.message : 'Error al registrarse';
           set({
             isLoading: false,
             error: message,

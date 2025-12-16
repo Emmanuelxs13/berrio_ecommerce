@@ -2,10 +2,7 @@ import { z } from 'zod';
 
 // ==================== AUTH VALIDATIONS ====================
 export const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, 'El email es requerido')
-    .email('Email inválido'),
+  email: z.string().min(1, 'El email es requerido').email('Email inválido'),
   password: z
     .string()
     .min(1, 'La contraseña es requerida')
@@ -20,10 +17,7 @@ export const registerSchema = z
       .min(1, 'El nombre es requerido')
       .min(2, 'El nombre debe tener al menos 2 caracteres')
       .max(50, 'El nombre no puede exceder 50 caracteres'),
-    email: z
-      .string()
-      .min(1, 'El email es requerido')
-      .email('Email inválido'),
+    email: z.string().min(1, 'El email es requerido').email('Email inválido'),
     password: z
       .string()
       .min(1, 'La contraseña es requerida')
@@ -40,10 +34,7 @@ export const registerSchema = z
   });
 
 export const forgotPasswordSchema = z.object({
-  email: z
-    .string()
-    .min(1, 'El email es requerido')
-    .email('Email inválido'),
+  email: z.string().min(1, 'El email es requerido').email('Email inválido'),
 });
 
 export const resetPasswordSchema = z
@@ -69,7 +60,14 @@ export const productFiltersSchema = z.object({
   inStock: z.boolean().optional(),
   featured: z.boolean().optional(),
   sortBy: z
-    .enum(['price_asc', 'price_desc', 'name_asc', 'name_desc', 'newest', 'popular'])
+    .enum([
+      'price_asc',
+      'price_desc',
+      'name_asc',
+      'name_desc',
+      'newest',
+      'popular',
+    ])
     .optional(),
   page: z.number().min(1).optional(),
   limit: z.number().min(1).max(100).optional(),

@@ -27,7 +27,7 @@ const calculateSummary = (items: CartItem[]): CartSummary => {
 
   const discount = items.reduce((sum, item) => {
     if (item.discount) {
-      return sum + (item.price * item.discount / 100) * item.quantity;
+      return sum + ((item.price * item.discount) / 100) * item.quantity;
     }
     return sum;
   }, 0);
@@ -75,9 +75,7 @@ export const useCartStore = create<CartState>()(
           }
 
           newItems = items.map((i) =>
-            i.id === product.id
-              ? { ...i, quantity: newQuantity }
-              : i
+            i.id === product.id ? { ...i, quantity: newQuantity } : i
           );
         } else {
           // Verificar stock al agregar nuevo

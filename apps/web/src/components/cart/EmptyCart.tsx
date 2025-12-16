@@ -19,21 +19,21 @@ export function EmptyCart() {
     <div className="max-w-2xl mx-auto text-center py-12">
       {/* Icono animado */}
       <div className="relative inline-block mb-8">
-        <div className="absolute inset-0 bg-primary-100 rounded-full blur-2xl opacity-50 animate-pulse" />
-        <div className="relative w-32 h-32 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
+        <div className="absolute inset-0 bg-accent-500/20 rounded-full blur-2xl opacity-50 animate-pulse" />
+        <div className="relative w-32 h-32 bg-gradient-to-br from-accent-600 to-purple-600 rounded-full flex items-center justify-center shadow-xl shadow-accent-500/20">
           <ShoppingCart className="h-16 w-16 text-white" />
         </div>
-        <div className="absolute -top-2 -right-2 w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center animate-bounce">
+        <div className="absolute -top-2 -right-2 w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center animate-bounce shadow-lg">
           <span className="text-2xl">🛒</span>
         </div>
       </div>
 
       {/* Mensaje principal */}
-      <h2 className="text-3xl font-bold text-gray-900 mb-4">
+      <h2 className="text-3xl font-bold text-dark-50 mb-4">
         Tu carrito está vacío
       </h2>
-      <p className="text-lg text-gray-600 mb-8">
-        ¡Es hora de llenarlo con productos increíbles! 
+      <p className="text-lg text-dark-300 mb-8">
+        ¡Es hora de llenarlo con productos increíbles!
         <br />
         Explora nuestro catálogo y encuentra lo que necesitas.
       </p>
@@ -62,7 +62,7 @@ export function EmptyCart() {
 
       {/* Categorías populares */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <h3 className="text-lg font-semibold text-dark-100 mb-4">
           Categorías Populares
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -74,7 +74,7 @@ export function EmptyCart() {
               onClick={() => router.push(category.path)}
             >
               <div className="text-3xl mb-2">{category.icon}</div>
-              <p className="text-sm font-medium text-gray-700">
+              <p className="text-sm font-medium text-dark-200">
                 {category.name}
               </p>
             </Card>
@@ -83,35 +83,65 @@ export function EmptyCart() {
       </div>
 
       {/* Beneficios */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 pt-12 border-t border-gray-200">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 pt-12 border-t border-dark-800">
         <div className="text-center">
-          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-            <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          <div className="w-12 h-12 bg-accent-500/20 border border-accent-500/30 rounded-full flex items-center justify-center mx-auto mb-3">
+            <svg
+              className="h-6 w-6 text-accent-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
             </svg>
           </div>
-          <h4 className="font-semibold text-gray-900 mb-1">Envío Gratis</h4>
-          <p className="text-sm text-gray-600">En compras mayores a $50</p>
+          <h4 className="font-semibold text-dark-100 mb-1">Envío Gratis</h4>
+          <p className="text-sm text-dark-400">En compras mayores a $50</p>
         </div>
 
         <div className="text-center">
-          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-            <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          <div className="w-12 h-12 bg-emerald-500/20 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-3">
+            <svg
+              className="h-6 w-6 text-emerald-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
             </svg>
           </div>
-          <h4 className="font-semibold text-gray-900 mb-1">Compra Segura</h4>
-          <p className="text-sm text-gray-600">Pagos 100% protegidos</p>
+          <h4 className="font-semibold text-dark-100 mb-1">Compra Segura</h4>
+          <p className="text-sm text-dark-400">Pagos 100% protegidos</p>
         </div>
 
         <div className="text-center">
-          <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-            <svg className="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div className="w-12 h-12 bg-purple-500/20 border border-purple-500/30 rounded-full flex items-center justify-center mx-auto mb-3">
+            <svg
+              className="h-6 w-6 text-purple-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           </div>
-          <h4 className="font-semibold text-gray-900 mb-1">Entrega Rápida</h4>
-          <p className="text-sm text-gray-600">24-48 horas hábiles</p>
+          <h4 className="font-semibold text-dark-100 mb-1">Entrega Rápida</h4>
+          <p className="text-sm text-dark-400">24-48 horas hábiles</p>
         </div>
       </div>
     </div>

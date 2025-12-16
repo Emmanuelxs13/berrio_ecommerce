@@ -1,7 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from './Button';
 
 interface DialogProps {
   open: boolean;
@@ -114,11 +113,7 @@ export const DialogHeader: React.FC<DialogHeaderProps> = ({
   children,
   className,
 }) => {
-  return (
-    <div className={cn('p-6 pb-4', className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn('p-6 pb-4', className)}>{children}</div>;
 };
 
 export const DialogTitle: React.FC<DialogTitleProps> = ({
@@ -126,12 +121,7 @@ export const DialogTitle: React.FC<DialogTitleProps> = ({
   className,
 }) => {
   return (
-    <h2
-      className={cn(
-        'text-2xl font-bold text-gray-900',
-        className
-      )}
-    >
+    <h2 className={cn('text-2xl font-bold text-gray-900', className)}>
       {children}
     </h2>
   );
@@ -141,22 +131,14 @@ export const DialogDescription: React.FC<DialogDescriptionProps> = ({
   children,
   className,
 }) => {
-  return (
-    <p className={cn('text-gray-600 mt-2', className)}>
-      {children}
-    </p>
-  );
+  return <p className={cn('text-gray-600 mt-2', className)}>{children}</p>;
 };
 
-export const DialogBody: React.FC<{ children: React.ReactNode; className?: string }> = ({
-  children,
-  className,
-}) => {
-  return (
-    <div className={cn('px-6 py-4', className)}>
-      {children}
-    </div>
-  );
+export const DialogBody: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+}> = ({ children, className }) => {
+  return <div className={cn('px-6 py-4', className)}>{children}</div>;
 };
 
 export const DialogFooter: React.FC<DialogFooterProps> = ({

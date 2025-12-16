@@ -31,13 +31,18 @@ export default function ProductsPage() {
       : undefined,
     inStock: searchParams.get('inStock') === 'true' || undefined,
     featured: searchParams.get('featured') === 'true' || undefined,
-    sortBy: (searchParams.get('sortBy') as ProductFiltersType['sortBy']) || 'newest',
+    sortBy:
+      (searchParams.get('sortBy') as ProductFiltersType['sortBy']) || 'newest',
     page: Number(searchParams.get('page')) || 1,
     limit: 12,
   };
 
   // Queries
-  const { data: productsData, isLoading, error } = useQuery({
+  const {
+    data: productsData,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['products', filters],
     queryFn: () => getProducts(filters),
   });
@@ -55,15 +60,18 @@ export default function ProductsPage() {
   // Loading state
   if (isLoading) {
     return (
-      <div className="container-custom py-8">
+      <div className="container-custom py-8 bg-dark-950">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filtros Skeleton */}
           <div className="hidden lg:block space-y-6">
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <div className="h-6 bg-gray-200 rounded w-24 mb-4 animate-pulse" />
+            <div className="bg-dark-900/50 backdrop-blur-sm rounded-xl border border-dark-800 p-6">
+              <div className="h-6 bg-dark-800 rounded w-24 mb-4 animate-pulse" />
               <div className="space-y-3">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="h-4 bg-gray-200 rounded animate-pulse" />
+                {Array.from({ length: 5 }, (_, i) => (
+                  <div
+                    key={`filter-skeleton-${i}`}
+                    className="h-4 bg-dark-800 rounded animate-pulse"
+                  />
                 ))}
               </div>
             </div>
@@ -72,8 +80,8 @@ export default function ProductsPage() {
           {/* Productos Skeleton */}
           <div className="lg:col-span-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(9)].map((_, i) => (
-                <ProductCardSkeleton key={i} />
+              {Array.from({ length: 9 }, (_, i) => (
+                <ProductCardSkeleton key={`product-skeleton-${i}`} />
               ))}
             </div>
           </div>
@@ -85,7 +93,7 @@ export default function ProductsPage() {
   // Error state
   if (error) {
     return (
-      <div className="container-custom py-8">
+      <div className="container-custom py-8 bg-dark-950">
         <Alert variant="error" title="Error al cargar productos">
           Hubo un problema al cargar los productos. Por favor intenta de nuevo.
         </Alert>
@@ -98,18 +106,17 @@ export default function ProductsPage() {
   const totalPages = productsData?.totalPages || 1;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark-950">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-12">
-        <div className="container-custom">
+      <div className="relative overflow-hidden bg-gradient-to-r from-accent-600 to-purple-600 text-white py-12">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <div className="relative container-custom">
           <h1 className="text-4xl font-bold mb-4">
             {filters.search
               ? `Resultados para "${filters.search}"`
               : 'Nuestros Productos'}
           </h1>
-          <p className="text-primary-100 text-lg">
-            {total} productos encontrados
-          </p>
+          <p className="text-white/80 text-lg">{total} productos encontrados</p>
         </div>
       </div>
 
@@ -127,7 +134,7 @@ export default function ProductsPage() {
           {/* Productos */}
           <div className="lg:col-span-3">
             {/* Toolbar */}
-            <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6 flex items-center justify-between flex-wrap gap-4">
+            <div className="bg-dark-900/50 backdrop-blur-sm rounded-xl border border-dark-800 p-4 mb-6 flex items-center justify-between flex-wrap gap-4">
               {/* Botón filtros mobile */}
               <Button
                 variant="outline"
@@ -140,7 +147,7 @@ export default function ProductsPage() {
               </Button>
 
               <div className="flex items-center gap-3 ml-auto">
-                <span className="text-sm text-gray-600 hidden sm:inline">
+                <span className="text-sm text-dark-300 hidden sm:inline">
                   {products.length} de {total} productos
                 </span>
                 <ProductSort currentSort={filters.sortBy} />
@@ -149,18 +156,25 @@ export default function ProductsPage() {
 
             {/* Grid de productos */}
             {products.length === 0 ? (
-              <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+              <div className="bg-dark-900/50 backdrop-blur-sm rounded-xl border border-dark-800 p-12 text-center">
                 <div className="max-w-md mx-auto">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Filter className="h-8 w-8 text-gray-400" />
+                  <div className="w-16 h-16 bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Filter className="h-8 w-8 text-dark-400" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">
+                  <h3 className="text-xl font-semibold text-dark-50 mb-2">
                     No se encontraron productos
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-dark-300 mb-6">
                     Intenta ajustar los filtros o realiza una búsqueda diferente
                   </p>
-                  <Button variant="primary" onClick={() => window.location.href = '/products'}>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        window.location.href = '/products';
+                      }
+                    }}
+                  >
                     Ver todos los productos
                   </Button>
                 </div>
@@ -192,17 +206,17 @@ export default function ProductsPage() {
       {showFilters && (
         <div className="fixed inset-0 z-50 lg:hidden animate-fadeIn">
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
             onClick={() => setShowFilters(false)}
           />
-          <div className="fixed inset-y-0 left-0 w-full max-w-sm bg-white shadow-2xl animate-slideIn overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between z-10">
-              <h2 className="text-lg font-semibold">Filtros</h2>
+          <div className="fixed inset-y-0 left-0 w-full max-w-sm bg-dark-900 border-r border-dark-800 shadow-2xl animate-slideIn overflow-y-auto">
+            <div className="sticky top-0 bg-dark-900 border-b border-dark-800 p-4 flex items-center justify-between z-10">
+              <h2 className="text-lg font-semibold text-dark-50">Filtros</h2>
               <button
                 onClick={() => setShowFilters(false)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="p-2 rounded-lg hover:bg-dark-800 transition-colors"
               >
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5 text-dark-400" />
               </button>
             </div>
             <div className="p-4">
